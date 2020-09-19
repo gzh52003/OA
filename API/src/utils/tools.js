@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+//引入根据时间戳生成的随机id
+const { v1: uuidv1 } = require('uuid');
 
 function formatData({code=1,data=[],msg='success'}={}){
 
@@ -23,8 +25,14 @@ function md5(data,privateKey='laoxie'){
     return result;
 }
 
+//生成uuid
+function UUID(){
+    return uuidv1();
+}
+
 
 module.exports = {
     formatData,
-    md5
+    md5,
+    UUID
 }
