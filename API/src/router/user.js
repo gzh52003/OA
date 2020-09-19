@@ -2,9 +2,28 @@ const express = require('express');
 const router = express.Router();
 const query = require('../utils/mysql');
 const mongo = require('../utils/mongo');
-const { formatData, md5 } = require('../utils/tools')
+const { formatData, md5,UUID } = require('../utils/tools')
+
+router.post('/',async(req,res)=>{
+    let {user} = req.body;
+    
+    const hash = crypto.createHash('md5');
+    hash.update(user.password+password_privateKey); // 加盐 盐值
+    user.password = hash.digest('hex');
+    
+    user.password = md5(user.password)
+    let result
+    try{
+        result = await mongo.insert('user',{...user});
+        res.send(formatData());
+    }catch(err){
+        res.send(forMatData({code:0}))
+
+    }
+})
 
 router.get('/', async (req, res) => {
+    console.log("UUID:",UUID());
     
     // mongo
     const { page = 1, size = 10 } = req.query;
@@ -24,7 +43,19 @@ router.delete('/:id', async (req, res) => {
         res.send(formatData({ code: 0 }))
     }
 
-
+})
+//检测账号
+router.get('/check',async (req,res)=>{
+    const {LoginID,_id} = req.query;
+    
+    let result = await mongo.find('user',{LoginID});
+    result = result.filter(item=>item._id != _id);
+    console.log("输出过滤结果result:",result);
+    if(result.length>0){
+        res.send(formatData({code:0}))
+    }else{
+        res.send(formatData())
+    }
 })
 
 // 获取单个用户信息、

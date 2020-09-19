@@ -12,29 +12,6 @@ const dbName = mongoconfig.database;
 
 
 async function connect() {
-    // return new Promise((resolve,reject)=>{
-    //     MongoClient.connect(url, function (err, client) {
-    //         // client： mongo客户端
-
-    //         if(err){
-    //             reject(err);
-    //         }
-
-    //         // 匹配数据库
-    //         const db = client.db(dbName);
-
-    //         // 导出db和client
-    //         resolve({db,client})
-
-    //         // 数据库操作
-
-
-    //         // 数据库操作完成后关闭连接，释放资源
-    //         // client.close();
-    //     });
-
-    // })
-
     const client = await MongoClient.connect(url);
     const db = client.db(dbName);
 
@@ -50,13 +27,6 @@ async function insert(colName, data) {
 
     // 根据传入的集合名称获取数据库中的某个集合
     const collection = db.collection(colName);
-
-    // if(Array.isArray(data)){
-    //     collection.insertMany(data); // collection['inserMany']
-    // }else{
-    //     collection.insertOne(data)
-    // }
-
     const result = await collection[Array.isArray(data) ? 'insertMany' : 'insertOne'](data)
 
     // 3. 关闭连接
