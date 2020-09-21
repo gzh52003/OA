@@ -43,21 +43,6 @@ const DepartmentList = lazy(() => import("./views/DepartmentList"));
 const DepartmentAdd = lazy(() => import("./views/DepartmentAdd"));
 
 
-// import Home from './views/Home'
-// import ToDone from './views/ToDone'
-// import ToDoListAll from './views/ToDoListAll'
-// import ToDoneAll from './views/ToDoneAll'
-// import ToDoneAllYes from './views/ToDoneAllYes'
-// import VacDays from './views/VacDays'
-// import PersonnelMan from './views/PersonnelMan'
-// import VacMan from './views/VacMan'
-// import AdminMan from './views/AdminMan'
-// import Other from './views/Other'
-// import UserList from './views/UserList'
-// import UserAdd from './views/UserAdd'
-// import DepartmentList from './views/DepartmentList'
-// import DepartmentAdd from './views/DepartmentAdd'
-
 class App extends React.PureComponent {
   state = {
     /* 一级菜单 */
@@ -222,18 +207,17 @@ class App extends React.PureComponent {
                     )
                   }
                   {/* 渲染二层菜单 */}
-                  {secmenu.map((item, idx) => {
+                  {secmenu.map(item => {
                     return (
                       <SubMenu
-                        key={item.path}
+                        key={item.name}
                         icon={item[0].icon}
                         title={item[0].text}
                       >
                         {item.map((secitem, index) => {
-                          // console.log("secitem", secitem, index);
                           if (index != 0) {
                             return (
-                              <Menu.Item key={secitem.name} icon={secitem.icon}>
+                              <Menu.Item key={secitem.path} icon={secitem.icon}>
                                 {secitem.text}
                               </Menu.Item>
                             );
@@ -245,11 +229,6 @@ class App extends React.PureComponent {
                 </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px'}}>
-              {/* <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
-              </Breadcrumb> */}
               <Content
                 className="site-layout-background"
                 style={{
@@ -282,7 +261,6 @@ class App extends React.PureComponent {
                   {/* <Redirect to="/notfound" /> */}
                 </Switch>
               </Suspense>
-              
               </Content>
             </Layout>
           </Layout>
