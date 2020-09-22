@@ -1,18 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { withRouter } from 'react-router-dom';
-import { Grid, NavBar, Icon, TabBar,List, WhiteSpace,Card } from 'antd-mobile';
+import { TabBar } from 'antd-mobile';
 import {
   UserOutlined,
   TeamOutlined,
-  ReadFilled,
   HomeOutlined,
-  FormOutlined,
-  AuditOutlined,
-  FileDoneOutlined,
-  AppstoreAddOutlined,
-  CheckCircleTwoTone,
   BarChartOutlined
 } from '@ant-design/icons';
 

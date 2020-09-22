@@ -4,6 +4,7 @@ import { NavBar, Icon} from 'antd-mobile';
 
 import App from './App'
 import TodoList from '~/TodoList'
+import Approval from '~/approval/Approval'
 
 @withRouter
 class main extends React.Component {
@@ -25,6 +26,7 @@ class main extends React.Component {
                 <Switch>
                     <Route path="/home" component={App} />
                     <Route path="/todolist" component={TodoList} />
+                    <Route path="/approval" component={Approval} />
                     <Route path="/notfound" render={() => <div>404</div>} />
                     <Redirect from="/" to="/home" exact />
                 </Switch>

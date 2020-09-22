@@ -18,26 +18,29 @@ const Item = List.Item;
 const Brief = Item.Brief;
 const menu = [
   {
-    icon: <FormOutlined />,
-    text: `待办`,
+    icon: <FormOutlined path='todolist' />,
+    text: `待办`
+    
   },{
-    icon: <AuditOutlined />,
-    text: `已办`,
+    icon: <AuditOutlined path='donelist'/>,
+    text: `已办`
+    
   },{
-    icon: <FileDoneOutlined />,
-    text: `OA审批`,
+    icon: <FileDoneOutlined path='approval'/>,
+    text: `OA审批`
   },{
-    icon: <AppstoreAddOutlined />,
-    text: `更多`,
+    icon: <AppstoreAddOutlined path='more'/>,
+    text: `更多`
+    
   }
 ]
 const data = Array.from(menu).map((_val, i) => ({
   icon:_val.icon,
   text:_val.text
 }));
-function goto({props},path){
-        // console.log("12345",this.props);
-        props.history.push(path);
+function goto({props},el){
+        console.log("12345",el);
+        props.history.push(el.icon.props.path);
     }
 function Home(props){
     console.log("props",props);
@@ -46,7 +49,7 @@ function Home(props){
             <div>
                 <div className="silder">欢迎进入移动门户</div>
                 {/* 宫格导航 */}
-                <Grid onClick={()=>goto(props,'todolist')} data={data} hasLine={false} itemStyle={{color:'#FA8258'}}/>
+                <Grid onClick={(el)=>goto(props,el)} data={data} hasLine={false} itemStyle={{color:'#FA8258'}}/>
                 <div>
                     <WhiteSpace size="lg" />
                     <Card full>

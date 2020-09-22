@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, WhiteSpace,Card } from 'antd-mobile';
+import { Tabs,Card } from 'antd-mobile';
 import {
     TagOutlined,
     ClockCircleOutlined,
