@@ -2,37 +2,126 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { withRouter } from 'react-router-dom';
-import { Grid } from 'antd-mobile';
+import { Grid, NavBar, Icon, TabBar,List, WhiteSpace,Card } from 'antd-mobile';
+import {
+  UserOutlined,
+  TeamOutlined,
+  ReadFilled,
+  HomeOutlined,
+  FormOutlined,
+  AuditOutlined,
+  FileDoneOutlined,
+  AppstoreAddOutlined,
+  CheckCircleTwoTone,
+  BarChartOutlined
+} from '@ant-design/icons';
+
+import Statistics from './views/Statistics'
+import Home from './views/home'
+import MailListTab from './views/MailListTab'
+import MineTab from './views/MineTab'
 // import 'antd-mobile/dist/antd-mobile.css';
 
-const data = Array.from(new Array(9)).map((_val, i) => ({
-  icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
-  text: `name${i}`,
-}));
+
+
 
  @withRouter
 class App extends React.Component {
   state = {
-    num: 10
+    selectedTab: 'homeTab',
+    hidden: false,
+    fullScreen: false,
   }
-  changeNumber = () => {
-    this.setState({
-      num: this.state.num + 1
-    })
+  
+  renderContent(pageText) {
+  
+    return (
+      <div style={{ paddingTop: 45,backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+      {
+        pageText==="homeTab"?<Home props={this.props}/>
+        :
+        pageText==="classTab"?<Statistics props={this.props}/>
+        :
+        pageText==="mailListTab"?<MailListTab props={this.props}/>
+        :<MineTab props={this.props}/>
+      }
+      
+      </div>
+      
+    );
   }
+  
   render() {
     console.log('App.props',this.props)
     return (
-      <div>
-      {/* <div className="App">
-          Hello Test {this.state.num}
-
-          <button onClick={this.changeNumber}>change Number</button>
-        </div> */
-      }
-        <div className="sub-title">这里是logo</div>
-        <Grid data={data} activeStyle={false} />
+      <>
+       <div style={this.state.fullScreen ? { position: 'fixed', height: '100%', width: '100%', top: 0 } : { }}>
+        <TabBar
+          unselectedTintColor="#949494"
+          tintColor="#33A3F4"
+          barTintColor="white"
+          hidden={this.state.hidden}
+        >
+          <TabBar.Item
+            title="首页"
+            key="home"
+            icon={<HomeOutlined />}
+            selectedIcon={<HomeOutlined />}
+            selected={this.state.selectedTab === 'homeTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'homeTab',
+              });
+            }}
+          >
+            {this.renderContent('homeTab')}
+          </TabBar.Item>
+          <TabBar.Item
+            icon={<BarChartOutlined />}
+            selectedIcon={<BarChartOutlined />}
+            title="统计"
+            key="class"
+            selected={this.state.selectedTab === 'classTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'classTab',
+              });
+            }}
+          >
+            {this.renderContent('classTab')}
+          </TabBar.Item>
+          <TabBar.Item
+            icon={<TeamOutlined />}
+            selectedIcon={<TeamOutlined />}
+            title="通讯录"
+            key="mailList"
+            dot
+            selected={this.state.selectedTab === 'mailListTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'mailListTab',
+              });
+            }}
+          >
+            {this.renderContent('mailListTab')}
+          </TabBar.Item>
+          <TabBar.Item
+            icon={<UserOutlined />}
+            selectedIcon={<UserOutlined />}
+            title="通知"
+            key="mine"
+            selected={this.state.selectedTab === 'mineTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'mineTab',
+              });
+            }}
+          >
+            {this.renderContent('mineTab')}
+          </TabBar.Item>
+        </TabBar>
       </div>
+      </>
     );
   }
 
