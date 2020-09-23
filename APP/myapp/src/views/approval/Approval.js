@@ -2,9 +2,6 @@ import React from 'react';
 // import { Tabs, WhiteSpace,Card } from 'antd-mobile';
 import { Grid, NavBar, Icon, TabBar,List, WhiteSpace,Card } from 'antd-mobile';
 import {
-    TagOutlined,
-    ClockCircleOutlined,
-    DashboardOutlined,
     FormOutlined,
     AuditOutlined,
     FileDoneOutlined,
