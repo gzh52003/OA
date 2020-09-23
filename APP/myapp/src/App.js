@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { withRouter } from 'react-router-dom';
-import { TabBar } from 'antd-mobile';
+import { TabBar,NavBar,Icon } from 'antd-mobile';
 import {
   UserOutlined,
   TeamOutlined,
@@ -29,7 +29,17 @@ class App extends React.Component {
   renderContent(pageText) {
   
     return (
-      <div style={{ paddingTop: 45,backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+      <>
+      <NavBar
+        mode="light"
+        icon={<Icon type="left" color="#000"/>}
+        onLeftClick={() => {this.props.history.goBack();console.log("---------",history,this)}}
+        rightContent={[
+          // <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
+          <Icon key="1" type="ellipsis" color="#000"/>,
+        ]}
+      >移动门户</NavBar>
+      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
       {
         pageText==="homeTab"?<Home props={this.props}/>
         :
@@ -40,7 +50,7 @@ class App extends React.Component {
       }
       
       </div>
-      
+      </>
     );
   }
   

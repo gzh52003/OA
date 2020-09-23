@@ -46,11 +46,11 @@
   width: 40px;
   height: 60px;
 }
-.am-navbar{
+/* .am-navbar{
   position: absolute;
     width: 100%;
     z-index: 1000;
-}
+} */
 .am-tab-bar{
   position: fixed;
   bottom: 0;
