@@ -1,6 +1,8 @@
 import React from 'react'
 import { ListView } from 'antd-mobile';
 
+import "@/css/todolist.scss"
+
 const data = [
     {
       img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
