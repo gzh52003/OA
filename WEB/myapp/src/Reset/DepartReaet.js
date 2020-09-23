@@ -1,21 +1,18 @@
-//用户列表
+
 import React, { useState } from 'react';
-import { Breadcrumb, Input, Button, Table, Radio, Divider, InputNumber, Popconfirm, Form } from 'antd';
-import { HomeOutlined, UserOutlined, SolutionOutlined, AudioOutlined } from '@ant-design/icons';
-import '../css/User.scss';
-
-const { Search } = Input;
+import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
 const originData = [];
-
+import '../css/User.scss';
 for (let i = 0; i < 100; i++) {
     originData.push({
         key: i.toString(),
-        num: i + 1,
         name: `Edrward ${i}`,
-        position: `jl`,
-        jurisdiction: `London Park no. ${i}`,
+        age: 32,
+        gender: '男',
+        position: `London Park no. ${i}`,
     });
 }
+
 
 const EditableCell = ({
     editing,
@@ -39,7 +36,7 @@ const EditableCell = ({
                     rules={[
                         {
                             required: true,
-                            message: `请填写${title}!`,
+                            message: `Please Input ${title}!`,
                         },
                     ]}
                 >
@@ -52,27 +49,27 @@ const EditableCell = ({
     );
 };
 
-const UserList = () => {
+const DepartReaet = () => {
     const [form] = Form.useForm();
     const [data, setData] = useState(originData);
     const [editingKey, setEditingKey] = useState('');
 
     const isEditing = (record) => record.key === editingKey;
-    //修改
+
     const edit = (record) => {
         form.setFieldsValue({
-            num: '',
-            loginname: '',
             name: '',
+            age: '',
+            gender: '',
             position: '',
-            jurisdiction: '',
+
             ...record,
         });
         setEditingKey(record.key);
     };
-
-    const remove = (id) => {
-        console.log(8888);
+    //点击删除
+    const Dremove = (id) => {
+        console.log(3);
     };
 
     const cancel = () => {
@@ -102,41 +99,35 @@ const UserList = () => {
 
     const columns = [
         {
-            title: '#',
-            dataIndex: 'num',
-            width: '10%',
-            editable: true,
-        },
-        {
-            title: '登录名',
-            dataIndex: 'loginname',
-            width: '20%',
-            editable: true,
-        },
-        {
-            title: '用户名',
+            title: '姓名',
             dataIndex: 'name',
             width: '25%',
             editable: true,
         },
         {
-            title: '职位',
-            dataIndex: ' position',
+            title: '年龄',
+            dataIndex: 'gender',
             width: '15%',
             editable: true,
         },
         {
-            title: '部门',
-            dataIndex: 'jurisdiction',
+            title: '性别',
+            dataIndex: 'age',
+            width: '15%',
+            editable: true,
+        },
+        {
+            title: '职务（职位）',
+            dataIndex: 'position',
             width: '20%',
             editable: true,
         },
         {
-            title: 'operation',
+            title: '操作',
             dataIndex: 'operation',
             render: (_, record) => {
                 const editable = isEditing(record);
-                return (editable ? (
+                return editable ? (
                     <span>
                         <a
                             href="javascript:;"
@@ -146,7 +137,7 @@ const UserList = () => {
                             }}
                         >
                             保存
-              </a>
+            </a>
                         <Popconfirm title="确定取消吗?" onConfirm={cancel}>
                             <a>取消</a>
                         </Popconfirm>
@@ -156,11 +147,13 @@ const UserList = () => {
                             <a disabled={editingKey !== ''} onClick={() => edit(record)}>
                                 修改
                             </a>
-                            <a onClick={() => remove(record)} className="rem"> 删除</a>
+                            <a onClick={() => Dremove(record)} className="rem">
+                                删除
+                            </a>
+
                         </p>
 
-                    ))
-
+                    );
             },
         },
     ];
@@ -173,52 +166,37 @@ const UserList = () => {
             ...col,
             onCell: (record) => ({
                 record,
-                inputType: col.dataIndex,
+                inputType: col.dataIndex === 'age' ? 'number' : 'text',
                 dataIndex: col.dataIndex,
                 title: col.title,
-                editing: isEditing(record),
+                editing: isEditing(record)
             }),
         };
     });
-
-    //输出
     return (
-        <div>
-            <Breadcrumb style={{ marginBottom: '10px' }}>
-                <Breadcrumb.Item href="">
-                    <HomeOutlined />
-                    <span>我的首页</span>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="">
-                    <UserOutlined />
-                    <span>用户管理</span>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="/#ToDoListAll">
-                    <SolutionOutlined />
-                    <span>用户列表</span>
-                </Breadcrumb.Item>
-            </Breadcrumb>
-            <Search placeholder="请输入关键字" enterButton className="shuru" />
-            {/* 渲染的表格 */}
-            <Form form={form} component={false} className="ulxr">
-                <Table
-                    components={{
-                        body: {
-                            cell: EditableCell,
-                        },
-                    }}
-                    bordered
-                    dataSource={data}
-                    columns={mergedColumns}
-                    rowClassName="editable-row"
-                    pagination={{
-                        onChange: cancel,
-                    }}
-                />
-            </Form>
-        </div>
-
+        <Form form={form} component={false}>
+            <Table
+                components={{
+                    body: {
+                        cell: EditableCell,
+                    },
+                }}
+                bordered
+                dataSource={data}
+                columns={mergedColumns}
+                rowClassName="editable-row"
+                pagination={{
+                    onChange: cancel,
+                }}
+            />
+        </Form>
     );
 };
 
-export default UserList;
+
+
+
+
+
+
+export default DepartReaet;

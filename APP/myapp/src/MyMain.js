@@ -19,7 +19,7 @@ class main extends React.Component {
             <Suspense fallback={<div>loading...</div>}>
                 <Switch>
                     <Route path="/home" component={App} />
-                    <Route path="/todolist" component={TodoList} />
+                    <Route path="/list/:isTodo" component={TodoList} />
                     <Route path="/approval" component={Approval} />
                     <Route path="/Holidays/:id" component={HoFill} exact/>
                     <Route path="/Holidays" component={Holidays} />
