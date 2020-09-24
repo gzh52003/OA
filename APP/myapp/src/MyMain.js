@@ -6,7 +6,7 @@ import TodoList from '~/TodoList'
 import Approval from '~/approval/Approval'
 import Holidays from '~/holiday/Holidays'
 import Performan from '~/Performan'
-
+import Login from './views/Login'
 import './assets/common/reset.scss';
 import HoFill from '~/holiday/HoFill';
 
@@ -22,7 +22,9 @@ class main extends React.Component {
             <Route path="/approval" component={Approval} />
             <Route path="/Holidays/:id" component={HoFill} exact />
             <Route path="/Holidays" component={Holidays} />
-            <Route path="/performan" component={Performan} />
+            <Route path="/Performan" component={Performan} />
+            <Route path="/Login" component={Login} />
+
             <Route path="/notfound" render={() => <div>404</div>} />
             <Redirect from="/" to="/home" exact />
           </Switch>

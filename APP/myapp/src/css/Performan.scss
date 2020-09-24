@@ -50,3 +50,44 @@ html,body{
     // margin-top: 10px;
     border-top: 20px solid #F7F7F7;
 }
+.liuc{
+    height:260px;
+    width:100%;
+    // padding-bottom: 40px;
+    background-color:#F7F7F7;
+    // border: 20px solid #F7F7F7;
+}
+.lctitle{
+    background-color: #fff;
+    padding:0 15px 0 15px;
+    height:230px;
+    margin:10px;
+    border-radius: 20px;
+    .sub-title{
+        color: #000;
+        font-size: 18px;
+        font-weight: bold;
+    }
+}
+.yiwen{
+    width:100%;
+    text-align: center;
+    height:30px;
+    color:#1890FF ;
+    background-color: #F7F7F7;
+
+}
+
+.pfbtn{
+    height:40px;
+    width: 90%;
+   border-radius: 30px;
+}
+.tij{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 10px;
+    height:60px;
+    background-color: #fff;
+}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { withRouter } from 'react-router-dom';
-import { TabBar,NavBar,Icon } from 'antd-mobile';
+import { TabBar, NavBar, Icon } from 'antd-mobile';
 import {
   UserOutlined,
   TeamOutlined,
@@ -10,6 +10,8 @@ import {
 } from '@ant-design/icons';
 import Statistics from './views/Statistics'
 import Home from './views/home'
+// import Login from './views/Login'
+
 import MailListTab from './views/MailListTab'
 import MineTab from './views/MineTab'
 
@@ -28,26 +30,26 @@ class App extends React.Component {
 
     return (
       <>
-      <NavBar
-        mode="light"
-        icon={<Icon type="left" color="#000"/>}
-        onLeftClick={() => {this.props.history.goBack();console.log("---------",history,this)}}
-        rightContent={[
-          // <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
-          <Icon key="1" type="ellipsis" color="#000"/>,
-        ]}
-      >移动门户</NavBar>
-      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-      {
-        pageText==="homeTab"?<Home props={this.props}/>
-        :
-        pageText==="classTab"?<Statistics props={this.props}/>
-        :
-        pageText==="mailListTab"?<MailListTab props={this.props}/>
-        :<MineTab props={this.props}/>
-      }
-      
-      </div>
+        <NavBar
+          mode="light"
+          icon={<Icon type="left" color="#000" />}
+          onLeftClick={() => { this.props.history.goBack(); console.log("---------", history, this) }}
+          rightContent={[
+            // <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
+            <Icon key="1" type="ellipsis" color="#000" />,
+          ]}
+        >移动门户</NavBar>
+        <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+          {
+            pageText === "homeTab" ? <Home props={this.props} />
+              :
+              pageText === "classTab" ? <Statistics props={this.props} />
+                :
+                pageText === "mailListTab" ? <MailListTab props={this.props} />
+                  : <MineTab props={this.props} />
+          }
+
+        </div>
       </>
     );
   }
