@@ -10,7 +10,7 @@ import {
   AuditOutlined,
   FileDoneOutlined,
   AppstoreAddOutlined,
-  CheckCircleTwoTone,
+  EditTwoTone,
   BarChartOutlined
 } from '@ant-design/icons';
 
@@ -18,12 +18,12 @@ const Item = List.Item;
 const Brief = Item.Brief;
 const menu = [
   {
-    icon: <FormOutlined path='todolist' />,
-    text: `待办`
+    icon: <FormOutlined path='/list/todo' />,
+    text: `待处理`
     
   },{
-    icon: <AuditOutlined path='donelist'/>,
-    text: `已办`
+    icon: <AuditOutlined path='/list/done'/>,
+    text: `已处理`
     
   },{
     icon: <FileDoneOutlined path='approval'/>,
@@ -54,16 +54,16 @@ function Home(props){
                     <WhiteSpace size="lg" />
                     <Card full>
                     <Card.Header
-                        title="我的待办"
+                        title="我的待处理事项"
                         thumb={<FormOutlined /> }
                         style={{background:'#FAFAFA'}}
                     />
                     <Card.Body>
                     {/* <List className="my-list"> </List>*/}
-                        <Item arrow="horizontal" align="top" thumb={<CheckCircleTwoTone twoToneColor="#52c41a" />} multipleLine  onClick={() => {console.log('打开待办')}}>
+                        <Item arrow="horizontal" align="top" thumb={<EditTwoTone twoToneColor="#52c41a" />} multipleLine  onClick={() => {console.log('打开待办')}}>
                         Title <Brief>subtitle</Brief>
                         </Item>
-                        <Item arrow="horizontal" align="top" thumb={<CheckCircleTwoTone twoToneColor="#52c41a" />} multipleLine  onClick={() => {console.log('打开待办')}}>
+                        <Item arrow="horizontal" align="top" thumb={<EditTwoTone twoToneColor="#52c41a" />} multipleLine  onClick={() => {console.log('打开待办')}}>
                         Title <Brief>subtitle</Brief>
                         </Item>
                     </Card.Body>

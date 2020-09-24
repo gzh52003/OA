@@ -169,7 +169,7 @@ const DepartReaet = () => {
                 inputType: col.dataIndex === 'age' ? 'number' : 'text',
                 dataIndex: col.dataIndex,
                 title: col.title,
-                editing: isEditing(record),
+                editing: isEditing(record)
             }),
         };
     });

@@ -55,46 +55,58 @@ class App extends React.PureComponent {
       path: '/Home',
 
     }, {
+      text: "我的待办",
+      name: "ToDone",
+      icon: <ScheduleOutlined />,
+      path: '/AllList/todo'
+    },{
       text: "我的已办",
       name: "ToDone",
       icon: <FileDoneOutlined />,
-      path: '/ToDone'
+      path:'/AllList/done'
+      // path: '/ToDone'
     },
+    {
+      text: "发起事件",
+      name: "InitiatingMatters",
+      icon: <FileAddOutlined />,
+      path: '/PersonnelMan'
+    }
     ],
     /* 二级菜单 */
     secmenu: [
-      [
+      /* [
         {
           text: "我的待办",
           name: "ToDoList",
-          icon: <ScheduleOutlined />,
+          icon: <ScheduleOutlined />
         },
         {
           text: "待办事项总数",
           name: "ToDoListAll",
           icon: <FieldTimeOutlined />,
-          path: '/ToDoListAll',
+          path: '/ToDoListAll'
         },
         {
           text: "已办事项总数",
           name: "ToDoneAll",
           icon: <FileOutlined />,
-          path: '/ToDoneAll',
+          path: '/ToDoneAll'
         },
         {
           text: "昨日已办总数",
           name: "ToDoneAllYes",
           icon: <FileOutlined />,
-          path: '/ToDoneAllYes',
+          path: '/ToDoneAllYes'
         },
         {
           text: "本月休假天数",
           name: "VacDays",
           icon: <ContactsOutlined />,
-          path: '/VacDays',
+          path: '/VacDays'
         }
-      ],
-      [
+      ], */
+      /* [
         {
           text: "发起事件",
           name: "InitiatingMatters",
@@ -124,7 +136,7 @@ class App extends React.PureComponent {
           icon: <TagsOutlined />,
           path: '/Other'
         },
-      ],
+      ], */
       [
         {
           text: "用户管理",
@@ -212,7 +224,7 @@ class App extends React.PureComponent {
                 {secmenu.map(item => {
                   return (
                     <SubMenu
-                      key={item.name}
+                      key={item[0].name}
                       icon={item[0].icon}
                       title={item[0].text}
                     >
@@ -243,7 +255,7 @@ class App extends React.PureComponent {
                   <Switch>
                     <Route path="/Home" component={Home} />
                     <Route path="/ToDone" component={ToDone} />
-                    <Route path="/ToDoListAll" component={ToDoListAll} />
+                    <Route path="/AllList/:ShowType" component={ToDoListAll} />
                     <Route path="/ToDoneAll" component={ToDoneAll} />
                     <Route path="/ToDoneAllYes" component={ToDoneAllYes} />
                     <Route path="/VacDays" component={VacDays} />
