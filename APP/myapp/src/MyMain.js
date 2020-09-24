@@ -12,37 +12,20 @@ import HoFill from '~/holiday/HoFill';
 
 @withRouter
 class main extends React.Component {
-    
-    render() {
-        
-        return (
-            <>
-            <Suspense fallback={<div>loading...</div>}>
-                <Switch>
-                    <Route path="/home" component={App} />
-                    <Route path="/list/:isTodo" component={TodoList} />
-                    <Route path="/approval" component={Approval} />
-                    <Route path="/Holidays/:id" component={HoFill} exact/>
-                    <Route path="/Holidays" component={Holidays} />
-                    <Route path="/notfound" render={() => <div>404</div>} />
-                    <Redirect from="/" to="/home" exact />
-                </Switch>
   render() {
-
     return (
       <>
-
         <Suspense fallback={<div>loading...</div>}>
           <Switch>
             <Route path="/home" component={App} />
-            <Route path="/todolist" component={TodoList} />
+            <Route path="/list/:isTodo" component={TodoList} />
             <Route path="/approval" component={Approval} />
+            <Route path="/Holidays/:id" component={HoFill} exact />
+            <Route path="/Holidays" component={Holidays} />
             <Route path="/performan" component={Performan} />
-
             <Route path="/notfound" render={() => <div>404</div>} />
             <Redirect from="/" to="/home" exact />
           </Switch>
-
         </Suspense>
       </>
     )
