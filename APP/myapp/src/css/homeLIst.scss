@@ -7,17 +7,17 @@
     width: 40px;
     height: 60px;
   }
-  .am-list-content span{
+  .HoList .am-list-content span{
     display: inline-block;
     width:90px;
     border-right: 1px solid #ccc;
   }
-  .am-list-content b{
+  .HoList .am-list-content b{
     margin-left:20px;
     color:#ccc;
     font-size:14px;
   }
-  .am-list-content i{
+  .HoList .am-list-content i{
     display: inline-block;
     width:10px;
     height:10px;
@@ -26,7 +26,7 @@
     margin-right: 5px;
   }
   
-  .am-list{
+  .HoList .am-list{
     margin:0px 0 10px 0;
   }
   /* .am-navbar-light{

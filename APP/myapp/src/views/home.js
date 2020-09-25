@@ -72,8 +72,6 @@ function Home(props){
                     </Card>
                 </div>  
             </div>
-            
-            
         )
     // }
     

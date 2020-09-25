@@ -1,0 +1,92 @@
+html,body{
+    height:100%;
+    background-color: #fff;
+}
+.zpheader{
+    // background-color: #fff;
+    color: #000;
+    
+    font-weight: bold;
+}
+.am-navbar-title{
+    font-size:20px;
+}
+.pertab .am-tabs-default-bar-content{
+    margin-top: 50px;
+    height:50px;
+    // margin-bottom: 15px;
+    // background-color: aqua;
+    // border-bottom: 20px solid #F7F7F7;
+}
+.am-search {
+    border-bottom: 1px solid #ddd;
+  }
+  .sub-title {
+    color: #888;
+    font-size: 14px;
+    padding: 30px 0 18px 0;
+  }
+.kong{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #fff;
+    height:100%;
+}
+.am-list{
+    width:100%;
+}
+.am-list-header{
+    font-size: 18px;
+    color: #000;
+}
+.am-textarea-control textarea{
+    color: #ccc;
+    line-height: 20px;
+}
+.kong .am-list{
+    width:100%;
+    display: block;
+    // margin-top: 10px;
+    border-top: 20px solid #F7F7F7;
+}
+.liuc{
+    height:260px;
+    width:100%;
+    // padding-bottom: 40px;
+    background-color:#F7F7F7;
+    // border: 20px solid #F7F7F7;
+}
+.lctitle{
+    background-color: #fff;
+    padding:0 15px 0 15px;
+    height:230px;
+    margin:10px;
+    border-radius: 20px;
+    .sub-title{
+        color: #000;
+        font-size: 18px;
+        font-weight: bold;
+    }
+}
+.yiwen{
+    width:100%;
+    text-align: center;
+    height:30px;
+    color:#1890FF ;
+    background-color: #F7F7F7;
+
+}
+
+.pfbtn{
+    height:40px;
+    width: 90%;
+   border-radius: 30px;
+}
+.tij{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 10px;
+    height:60px;
+    background-color: #fff;
+}

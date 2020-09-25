@@ -1,0 +1,63 @@
+.minebody{
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    .xx{
+        display: flex;
+        .mtitle{
+            font-size: 18px;
+            text-align: start;
+        }
+        .micon{
+            height:12px;
+            margin-top: 14px;
+            margin-left: 5px;
+            color: #1890FF;
+        }
+    }  
+}
+.am-list-item {
+    min-height: 55px;
+}
+.mineList{
+    border-bottom: 15px solid rgb(241, 245, 248);
+    // margin-bottom: 30px;
+}
+
+.mbottom{
+    background-color: #fff;
+    .td{
+        padding-top: 10px;
+        margin-left: 15px;
+        display: flex;
+        justify-content: space-between;
+        .qiye{
+            font-size: 18px;
+        }
+        .shiftqy{
+            color: #888;
+            padding-top: 12px;
+            margin-right: 15px;   
+        }
+    }
+    .xinxi{
+        display: inline-block;
+        color: #ccc;
+        margin-left: -22px;
+       padding-bottom: 20px;
+    } 
+}
+
+.am-list-item img{
+    height:36px;
+    width:36px;
+}
+.qianming{
+    display: inline-block;
+    height: 46px;
+    width: 46px;
+    background-color:#1890FF ;
+    border-radius:46px;
+    text-align: center;
+    line-height: 46px;
+    color:#fff;
+}

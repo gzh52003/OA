@@ -16,6 +16,7 @@ const regRouter = require('./reg');
 const loginRouter = require('./login');
 const vcodeRouter = require('./vcode');
 const uploadRouter = require('./upload');
+const leaveRecRouter = require('./leaveRec');
 
 const { formatData } = require('../utils/tools');
 
@@ -61,6 +62,9 @@ router.get('/jwtverify',(req,res)=>{
         res.send(formatData({code:0}))
     }
 });
+
+//增加查询请假记录
+router.use('/leaveRec',leaveRecRouter);
 
 
 // 验证码

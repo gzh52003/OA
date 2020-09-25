@@ -6,6 +6,8 @@ import { district, provinceLite } from 'antd-mobile-demo-data';
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
 // import { createForm } from 'rc-form';
 
+import request from '../../../utils/request';
+
 import '../../../css/Submit.scss';
 
 const Step = Steps.Step;
@@ -136,6 +138,7 @@ class Submit extends React.PureComponent {
     files: data,
     multiple: false,
     date: now,
+    date1: now,
     time: now,
     utcDate: utcNow,
     dpValue: null,
@@ -144,9 +147,11 @@ class Submit extends React.PureComponent {
     cols: 1,
     pickerValue: [],
     asyncValue: [],
-    sValue: ['2013', '春'],
     visible: false,
     colorValue: ['发起提交'],
+    typeValue:[],
+    autoFocusInst:'',
+    reason:"",
   };
   onChange = (files, type, index) => {
     console.log("2131231=",files, type, index);
@@ -170,18 +175,66 @@ class Submit extends React.PureComponent {
     }, 120);
   };
 
-  componentDidMount() {
-    // this.autoFocusInst.focus();
+  /* 提交事件 */
+  onSubmit = async () =>{
+    console.log("111=",this.state.autoFocusInst)
+    const data = await request.post('/leaveRec',{
+      type:this.state.typeValue[0],
+      start:this.state.date,
+      end:this.state.date1,
+      duration:this.state.autoFocusInst,
+      reasons:this.state.reason
+    });
+    if(data.status === 200){
+      console.log("099182398274")
+     
+    }
+
   }
+
+  addApp = ()=>{
+    this.props.history.push("compassLea/"+el.props.value)
+  }
+  
+
+  componentDidMount() {
+    // console.log()
+    //this.autoFocusInst.focus();
+    // onSubmit = () =>{
+    //   console.log("111=",11111)
+    // }
+  }
+
+  changeKeyword = (val) => {
+    this.setState({
+      autoFocusInst:val
+    })
+  }
+  fillReason = (val) => {
+    this.setState({
+      reason:val
+    })
+  }
+
+
+  
+
+
   handleClick = () => {
     this.inputRef.focus();
   }
   
 
     render(){
-        console.log("Submit",this.props)
+        // console.log("Submit",this.props)
         const { files } = this.state;
         const { getFieldProps, getFieldError } = this.props.form;
+        ;
+        // console.log("this.state.typeValue=",this.state.typeValue)
+        // console.log("this.state.date=",this.state.date)
+        // console.log("this.state.date1=",this.state.date1)
+        // console.log("this.state.timeLong=",this.state.timeLong)
+
         return(
           <div className="Submit">
             {/* 提示信息 */}
@@ -191,9 +244,10 @@ class Submit extends React.PureComponent {
             <div>
               <List style={{ backgroundColor: 'white' }} className="picker-list">
                 <Picker data={colors} cols={1} {...getFieldProps('district3')} className="forss"
-                onChange={v => console.log(v)}>
+                value={this.state.typeValue}
+                onChange={v => {this.setState({ typeValue:v });}}
+                >
                   <List.Item arrow="horizontal">
-                    <strong>*</strong>
                     请假类型
                   </List.Item>
                 </Picker>
@@ -205,8 +259,8 @@ class Submit extends React.PureComponent {
             <List className="date-picker-list" style={{ backgroundColor: 'white' }}>
               <DatePicker
                 value={this.state.date}
-                onChange={date => console.log("121323=",date)}
-                // onChange={date => this.setState({ date })}
+                // onChange={date => console.log("121323=",date)}
+                onChange={date => this.setState({ date:date })}
               >
                 <List.Item arrow="horizontal">
                   开始时间
@@ -217,9 +271,9 @@ class Submit extends React.PureComponent {
              {/* 请假结束时间 */}
             <List className="date-picker-list" style={{ backgroundColor: 'white' }}>
               <DatePicker
-                value={this.state.date}
-                onChange={date => console.log("1213233465=",date)}
-                // onChange={date => this.setState({ date })}
+                value={this.state.date1}
+                // onChange={date => console.log("1213233465=",date)}
+                onChange={date1 => this.setState({ date1:date1 })}
               >
                 <List.Item arrow="horizontal">
                   结束时间
@@ -232,7 +286,9 @@ class Submit extends React.PureComponent {
                 {...getFieldProps('digit')}
                 type="digit"
                 placeholder="请输入时长"
-                onBlur={date => console.log("121323=",date)}
+                // onBlur={date => console.log("121323=",date)}
+                value={this.state.autoFocusInst}
+                onChange={this.changeKeyword} 
               >时长</InputItem>
               <p className="InputTips">时长将自动计入考勤统计</p>
             </List>
@@ -260,7 +316,8 @@ class Submit extends React.PureComponent {
                   {...getFieldProps('note1')}
                   rows={3}
                   placeholder="请输入请假事由"
-                  onBlur={date => console.log("121323=",date)}
+                  value={this.state.reason}
+                  onChange={this.fillReason} 
                 />
               </List>
             </div>
@@ -292,11 +349,11 @@ class Submit extends React.PureComponent {
               <p className="processTit">流程</p> 
               <Steps current={0}>
                 <Step title="审批人" description={<div>
-                  <a href="" className="addApproval" >+</a>
+                  <a href="" className="addApproval" onClick={this.addApp}>+</a>
                 </div>}/>
     
                 <Step title="抄送人" description={<div>
-                  <a href="" className="addCC">+</a>
+                  <a href="" className="addCC" onClick={this.addCC}>+</a>
                 </div>} />
               </Steps>
               <List.Item
@@ -317,9 +374,6 @@ class Submit extends React.PureComponent {
                 />
 
             </List>
-            
-
-
 
             {/* 通过日历 */}
             <List>
@@ -347,7 +401,8 @@ class Submit extends React.PureComponent {
             </List>
 
             <List className="submitButton">
-              <Button type="primary">提交</Button>
+              <Button type="primary" onClick={this.onSubmit}>提交</Button>
+              {/* onClick={()=>console.log("111")} */}
             </List>
 
 
