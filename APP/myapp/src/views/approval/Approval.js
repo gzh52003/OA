@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Tabs, WhiteSpace,Card } from 'antd-mobile';
-import { Grid, Card,NavBar,Icon } from 'antd-mobile';
+import { Grid, NavBar, Icon, TabBar, List, WhiteSpace, Card } from 'antd-mobile';
 import {
     FormOutlined,
     AuditOutlined,
@@ -15,20 +15,20 @@ import {
     UserSwitchOutlined,
     EditOutlined
 
-  } from '@ant-design/icons';
+} from '@ant-design/icons';
 import "@/css/approval.scss"
 const menu = [{
     icon: <FormOutlined path='todolist' />,
     text: `待处理`
-    
-  },{
-    icon: <AuditOutlined path='donelist'/>,
+
+}, {
+    icon: <AuditOutlined path='donelist' />,
     text: `已处理`
-    
-  },{
-    icon: <FileDoneOutlined path='approval'/>,
+
+}, {
+    icon: <FileDoneOutlined path='approval' />,
     text: `已发起`
-  }]
+}]
 const list = [
     { title: '假勤管理',content:[
         {
@@ -72,7 +72,7 @@ const list = [
     ] },
     { title: '其他',content:[
         {
-            icon: <EditOutlined path='todolist' />,
+            icon: <EditOutlined path='performan' />,
             text: `绩效自评`
         }
     ] }
@@ -96,7 +96,7 @@ class Approval extends React.Component{
             <div style={{borderTop:'1px solid #E6E6E6',marginBottom:'2rem'}}>
                 <Grid onClick={(el)=>this.goto(el)} data={menu} hasLine={false} columnNum="3" itemStyle={{color:'#FA8258'}}/>
                 <div>
-                    {list.map((item)=>{
+                    {list.map((item) => {
                         return <Card key={item.title}>
                                     <Card.Header
                                     title={item.title}
@@ -106,7 +106,7 @@ class Approval extends React.Component{
                                     </Card.Body>
                                 </Card>
                     })}
-                     
+
                     {/* <Card id="business">
                         <Card.Header
                         title="人事管理"
@@ -124,13 +124,13 @@ class Approval extends React.Component{
                         </Card.Body>
                     </Card>   */}
                 </div>
-                
-             
-                
+
+
+
             </div>
             </>
         )
     }
-    
+
 }
 export default Approval;

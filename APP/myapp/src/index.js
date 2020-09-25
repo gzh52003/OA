@@ -4,7 +4,7 @@ import './index.css';
 import MyMain from './MyMain';
 import * as serviceWorker from './serviceWorker';
 
-import {HashRouter,BrowserRouter} from 'react-router-dom'
+import { HashRouter, BrowserRouter } from 'react-router-dom'
 import store from './store';
 import {Provider} from 'react-redux'
 
