@@ -5,6 +5,7 @@ import App from './App'
 import TodoList from '~/TodoList'
 import Approval from '~/approval/Approval'
 import Holidays from '~/holiday/Holidays'
+import HoRec from '~/holiday/HoRec'
 
 import './assets/common/reset.scss';
 import HoFill from '~/holiday/HoFill';
@@ -21,6 +22,7 @@ class main extends React.Component {
                     <Route path="/home" component={App} />
                     <Route path="/list/:isTodo" component={TodoList} />
                     <Route path="/approval" component={Approval} />
+                    <Route path="/Holidays/compassLea/:id" component={HoRec} />
                     <Route path="/Holidays/:id" component={HoFill} exact/>
                     <Route path="/Holidays" component={Holidays} />
                     <Route path="/notfound" render={() => <div>404</div>} />

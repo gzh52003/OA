@@ -41,7 +41,7 @@ const data = Array.from(menu).map((_val, i) => ({
 function goto({props},el){
         console.log("12345",el);
         props.history.push(el.icon.props.path);
-    }
+}
 function Home(props){
     console.log("props",props);
     // render(){
