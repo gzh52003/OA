@@ -24,7 +24,7 @@ class MineTab extends React.Component {
                     </div>
                     <span>由自己编辑，部分内容展示在对外的信息，如昵称...</span>
                 </div>
-                <List className="my-list">
+                <List className="my-list mineList">
                     <Item extra={<span className="qianming">雨兰</span>}
                         arrow="horizontal" onClick={() => { }}>头像</Item>
                     <Item extra="老韦" arrow="horizontal" onClick={() => { }}>昵称</Item>
