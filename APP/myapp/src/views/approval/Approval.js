@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Tabs, WhiteSpace,Card } from 'antd-mobile';
-import { Grid, NavBar, Icon, TabBar,List, WhiteSpace,Card } from 'antd-mobile';
+import { Grid, NavBar, Icon, TabBar, List, WhiteSpace, Card } from 'antd-mobile';
 import {
     FormOutlined,
     AuditOutlined,
@@ -15,20 +15,20 @@ import {
     UserSwitchOutlined,
     EditOutlined
 
-  } from '@ant-design/icons';
+} from '@ant-design/icons';
 import "@/css/approval.scss"
 const menu = [{
     icon: <FormOutlined path='todolist' />,
     text: `待处理`
-    
-  },{
-    icon: <AuditOutlined path='donelist'/>,
+
+}, {
+    icon: <AuditOutlined path='donelist' />,
     text: `已处理`
-    
-  },{
-    icon: <FileDoneOutlined path='approval'/>,
+
+}, {
+    icon: <FileDoneOutlined path='approval' />,
     text: `已发起`
-  }]
+}]
 const list = [
     { title: '假勤管理',content:[
         {
@@ -36,7 +36,7 @@ const list = [
             text: `补卡申请`
         },
         {
-            icon: <SnippetsOutlined path='todolist' />,
+            icon: <SnippetsOutlined path='Holidays' />,
             text: `请假`
         },
         {
@@ -72,29 +72,41 @@ const list = [
     ] },
     { title: '其他',content:[
         {
-            icon: <EditOutlined path='todolist' />,
+            icon: <EditOutlined path='performan' />,
             text: `绩效自评`
         }
     ] }
   ];
 class Approval extends React.Component{
+    goto(el){
+        this.props.history.push(el.icon.props.path)
+    }
     render(){
         return (
-
-            <div style={{borderTop:'1px solid #E6E6E6',paddingTop:'2.8rem',marginBottom:'2rem'}}>
-                <Grid onClick={(el)=>goto(props,el)} data={menu} hasLine={false} columnNum="3" itemStyle={{color:'#FA8258'}}/>
+            <>
+            <NavBar
+              mode="light"
+              icon={<Icon type="left" />}
+              onLeftClick={() => {this.props.history.goBack();console.log("---------",history,this)}}
+              rightContent={[
+                // <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
+                <Icon key="1" type="ellipsis" />,
+              ]}
+            >移动门户</NavBar>
+            <div style={{borderTop:'1px solid #E6E6E6',marginBottom:'2rem'}}>
+                <Grid onClick={(el)=>this.goto(el)} data={menu} hasLine={false} columnNum="3" itemStyle={{color:'#FA8258'}}/>
                 <div>
-                    {list.map((item)=>{
+                    {list.map((item) => {
                         return <Card key={item.title}>
                                     <Card.Header
                                     title={item.title}
                                     />
                                     <Card.Body>
-                                        <Grid onClick={(el)=>goto(props,el)} data={item.content} hasLine={false} itemStyle={{color:'#FA8258'}}/>
+                                        <Grid onClick={(el)=>this.goto(el)} data={item.content} hasLine={false} itemStyle={{color:'#FA8258'}}/>
                                     </Card.Body>
                                 </Card>
                     })}
-                     
+
                     {/* <Card id="business">
                         <Card.Header
                         title="人事管理"
@@ -112,12 +124,13 @@ class Approval extends React.Component{
                         </Card.Body>
                     </Card>   */}
                 </div>
-                
-             
-                
+
+
+
             </div>
+            </>
         )
     }
-    
+
 }
 export default Approval;

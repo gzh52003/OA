@@ -1,0 +1,78 @@
+.Submit{
+    width:100%;
+}
+// placeholder{
+    
+// }
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    direction: rtl;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    direction: rtl;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ but I'm not sure about working */
+    direction: rtl;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    direction: rtl;
+}
+.InputTips{
+    line-height: 30px;
+    padding-left: 15px;
+    color:#ccc;
+}
+.ListTit{
+    line-height: 45px;
+    padding-left: 15px;
+    font-size: 17px;
+}
+.process{
+    position: relative;
+}
+.processTit{
+    line-height: 45px;
+    font-size: 17px;
+    padding-left: 15px;
+}
+.doubtTit{
+    line-height: 45px;
+    padding-left: 15px;
+    font-size: 17px;
+    text-align: center;
+    a{
+        color:rgb(26, 138, 212);
+    }
+}
+.submitButton{
+    padding:0 15px;
+    // position: absolute;
+    // bottom:0;
+    // height:47px;
+}
+// .am-button-primary{
+//     width:100%;
+// }
+.am-steps-vertical{
+    padding-left: 15px;
+}
+.addApproval,.addCC{
+    display: inline-block;
+    width:30px;
+    height:30px;
+    border:1px solid #108ee9;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 15px;
+    font-size: 16px;
+    position: absolute;
+    top:0px;
+    left:315px;
+    color:#108ee9;
+}
+.am-wingblank-lg{
+    padding-bottom: 5px;
+}
+.Submit .am-list{
+    margin:0px 0 10px 0;
+}
