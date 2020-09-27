@@ -53,7 +53,9 @@ export class FrontendAuth extends React.Component{
         //     return v.path.replace(/\/:.{1,}/,"") === pathname.slice(pathname.indexOf("/"),pathname.lastIndexOf("/"))
             
         // });
+        
         let targetRouterConfig = config.find((v) =>v.path === pathname)
+        console.log("hiiiii",config,pathname);
         if(!targetRouterConfig){
             targetRouterConfig = config.find((v) => v.path.replace(/\/:.{1,}/,"") === pathname.slice(pathname.indexOf("/"),pathname.lastIndexOf("/")))
         }

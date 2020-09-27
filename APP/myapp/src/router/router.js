@@ -38,10 +38,9 @@ export const routerConfig = [
         auth:true,
         type:'CacheRoute'
     },{
-        path:'/submit/Select',
+        path:'/Submit/Select',
         component:Select,
-        auth:true,
-        type:'CacheRoute'
+        auth:true
     },{
         path:'/Holidays/:id',
         component:HoFill,
