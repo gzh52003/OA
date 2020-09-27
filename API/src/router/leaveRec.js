@@ -180,11 +180,11 @@ const { formatData,UUID } = require('../utils/tools')
 
 router.post('/', async (req, res) => {
     const uuid = UUID();
-    let { type , start , end ,reasons} = req.body;
+    let { type , start , end ,reasons,username} = req.body;
     console.log(req.body);
     let result
     try {
-        result = await mongo.insert('leaveRec', { type , start , end, id:uuid,reasons });
+        result = await mongo.insert('leaveRec', { type , start , end, id:uuid,reasons,username });
 
         res.send(formatData());
     } catch (err) {
@@ -194,12 +194,14 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-    let { page = 1, size, sort = "add_time", filedtype, value } = req.query;
+    let { page = 1, size, sort = "add_time",username,filedtype, value } = req.query;
     const skip = (page - 1) * size; //0
     const limit = size * 1; //10  
     let obj = {};
     // console.log("value", value);
-    value ? obj[filedtype] = value : "";
+    // value ? obj[filedtype] = value : "";
+    obj["username"] = "xiaoli",
+    // console.log(username)
     // 处理排序参数
     sort = sort.split(',');// ['price'],['price','-1']
     // 查询所有商品
@@ -208,5 +210,42 @@ router.get('/', async (req, res) => {
     console.log("result", result);
     res.send(result);
 })
+
+/* 删除请假数据 */
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    const ids = id.split(",")
+    console.log("id=",id);
+    console.log("id=",ids);
+    try {
+        const result = await mongo.remove('leaveRec', { _id: { $in: ids }})
+        res.send('success')
+    } catch (err) {
+        console.log(err);
+        res.send('fail');
+    }
+
+})
+
+
+
+//查询相对应用户的请假次数
+// //按照传过来的类型，从相应的数据库中查找值
+// //filedtype查询的字段, 查询的值value 
+// router.get('/all', async (req, res) => {
+//     let { page = 1, size = 10, sort = "add_time", filedtype, value, booktype } = req.query;
+//     //const skip = (page - 1) * size; //0
+//     //const limit = size * 1; //10  
+//     console.log(booktype);
+//     let obj = {};
+//     value ? obj[filedtype] = value : "";
+//     // 处理排序参数
+//     sort = sort.split(',');// ['price'],['price','-1']
+//     // 查询所有商品
+//     const result = await mongo.find(booktype, obj, { sort })
+//     // console.log("obj", obj);
+//     console.log("result", result);
+//     res.send(result);
+// })
 
 module.exports = router;

@@ -12,12 +12,15 @@
 }
 
 .apPerson{
-  color:orange;
+  color:#000000;
 }
 .revoke{
   // display: inline-block;
   text-align: right;
   position: absolute;
   right:15px;
-  color: #108ee9;
+  color:orange;
+}
+.ViewData .am-list{
+  height:130px;
 }
