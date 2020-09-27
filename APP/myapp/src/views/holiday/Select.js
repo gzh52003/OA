@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import {  NavBar, Icon,List,NoticeBar,Checkbox, Flex } from 'antd-mobile';
+import {  NavBar, Icon,List,NoticeBar,Checkbox, Flex,SearchBar, Button} from 'antd-mobile';
 
 import request from '@/utils/request';
 import '../../css/Select.scss';
@@ -18,6 +18,7 @@ class Select extends React.Component {
     disabled: false,
     number:'',
     leaveRecList:[],
+    CurrentUser:"",
   }
   componentDidMount() {
   
@@ -35,6 +36,15 @@ class Select extends React.Component {
 
   onChange = (val) => {
     console.log(val);
+    this.setState({
+      CurrentUser:val,
+    })
+    
+  }
+
+  sureButton = ()=>{
+    this.props.history.push("/Holidays/compassLea" )
+    console.log(this)
   }
 
 
@@ -42,10 +52,11 @@ class Select extends React.Component {
   
 
   render() {
+    console.log(this.state.CurrentUser)
     const data = [
-        { value: 0, label: '李周周' },
-        { value: 1, label: '老韦' },
-        { value: 2, label: '老李' },
+        { value: "李周周", label: '李周周' },
+        { value:'老韦', label: '老韦' },
+        { value: '老李', label: '老李' },
       ];
     return (
       
@@ -57,6 +68,10 @@ class Select extends React.Component {
           onLeftClick={() => {this.props.history.goBack()}}
           >请选择
         </NavBar>
+
+
+        <SearchBar placeholder="Search" maxLength={8} />
+
 
         {/* 内容 */}
         <div className="leaveRec">
@@ -73,18 +88,19 @@ class Select extends React.Component {
                         {i.label}
                     </CheckboxItem>
                     ))}
-                    
                 </List>
             </div>
         </div>
 
-        
-
+        <div className="selButton">
+          <Button type="primary" onClick={this.sureButton}>确认</Button>
+        </div>
       </div>
     );
   }
 }
 
+Select = withRouter(Select)
 export default Select;
 
 

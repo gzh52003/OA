@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import LoginApp from './LoginApp';
+import LoginApp from './LoginApp';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -14,8 +14,8 @@ const Router = process.env.NODE_ENV === 'development' ? HashRouter : BrowserRout
 ReactDOM.render(
   <Provider store={store}>
     <Router>
+      {/* {localStorage.getItem("token") ? <App /> : <LoginApp />} */}
       <App />
-      {/* <LoginApp /> */}
     </Router>
   </Provider>,
   document.getElementById('root')

@@ -6,6 +6,7 @@ const mongo = require('./mongo');
 
 async function send(data={}){
     const res_proc = await insertwf_proc(data);
+    console.log("res_proc=",res_proc)
     
     if(!res_proc) return {msg:'插入wf_proc失败！',code:0}
     
@@ -13,16 +14,16 @@ async function send(data={}){
         ...data,
         ProcID:res_proc
     }
+    console.log("ProcID:res_proc=",data);
     const res_task = await insertwf_task(data);
     console.log('--------',res_task);
     if(res_task)return {msg:'插入wf_task失败！',code:1}
     return {msg:'插入失败！',code:0}
-    
-    
-
 }
 //封装一个函数，功能是插入实例表
 async function insertwf_proc(data={}){
+    // console("dataaaaaaaaa=",data)
+    console.log("data.BusinessID=",data.BusinessID);
     if(!data.BusinessID)return false
     let newData = {
         ProcID:UUID(),
@@ -38,6 +39,7 @@ async function insertwf_proc(data={}){
         await mongo.insert('wf_proc',newData);
         return newData.ProcID
     }catch(err){
+        console.log("err",err)
         return false
     }
     
@@ -45,8 +47,10 @@ async function insertwf_proc(data={}){
 
 //封装一个函数，功能是更新步骤
 async function insertwf_task(data={}){
+    console.log("insertwf_task=",data)
+    const ProcID = data.ProcID;
     //先判断ProcID是否已经存在表中，如果存在则获取TaskID，如果不存在则插入数据
-    const TaskID = await getTaskID()
+    const TaskID = await getTaskID(ProcID)
     console.log("TaskID--",TaskID);
     if(!TaskID) return false
     let newData = {
@@ -64,12 +68,14 @@ async function insertwf_task(data={}){
         await mongo.insert('wf_task',newData);
         return true
     }catch(err){
+        console.log("err啦啦啦啦=",err)
         return false
     }
 }
 
 //查询insertwf_task数据表
 async function getTaskID(ProcID){
+    console.log("ProcID=",ProcID)
     if(!ProcID)return false
     
     let TaskID = 1
