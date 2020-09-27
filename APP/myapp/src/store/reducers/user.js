@@ -2,7 +2,7 @@
 let currentUser = localStorage.getItem('currentUser');
 //抛出错误，防止程序报错
 try {
-    currentUser = JDON.parse(currentUser) || {};
+    currentUser = JSON.parse(currentUser) || {};
 } catch (error) {
     currentUser = {}
 }
@@ -17,6 +17,8 @@ function reducer(state=initState,action){
     switch (action.type) {
         case 'login':
             localStorage.setItem('currentUser',JSON.stringify(action.user));
+            //debugger
+            // action.dispatch()
             return action.user;
             
         case 'logout':

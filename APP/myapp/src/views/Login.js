@@ -8,8 +8,7 @@ import userAction,{login} from '../store/actions/user'
 import '../css/login.scss'
 class Loginn extends React.Component {
     async Login(e){
-        console.log("username",this.props.form.getFieldProps('username').value);
-        console.log("password",this.props.form.getFieldProps('password').value);
+        
         let username = this.props.form.getFieldProps('username').value;
         let password = this.props.form.getFieldProps('password').value;
 
@@ -17,7 +16,7 @@ class Loginn extends React.Component {
             username,
             password
         });
-        console.log(data);
+        
         
         if(data.code === 1){
             
@@ -26,11 +25,14 @@ class Loginn extends React.Component {
 
             // store.dispatch({type:'login',user:data.data})
             // props.dispatch({type:'login',user:data.data})
-            console.log(1);
+            
             Toast.success('登录成功');
-            // props.login(data.data);
-            localStorage.setItem("authorization",data.data.authorization)
+            this.props.login(data.data);
+            //this.props.dispatch({type:'login',user:data.data})
+            //this.props.dispatch(login(data.data))
+            // localStorage.setItem("authorization",data.data.authorization)
             // 跳转到我的页面
+           
             this.props.history.push('/home')
         }else{
             Toast.fail('登录失败');
@@ -62,16 +64,16 @@ class Loginn extends React.Component {
         )
     }
 }
-const mapStateToProps = ({currentUser})=>({currentUser})
+const mapStateToProps = (state)=>({})
 const mapDispatchToProps = function(dispatch){
-    // return {
-    //     login(user){
-    //         // dispatch({type:'login',user})
-    //         dispatch(login(user))
-    //     },
-    //     dispatch
-    // }
-    return bindActionCreators(userAction,dispatch)
+    return {
+        login(user){
+            // dispatch({type:'login',user})
+            dispatch(login(user))
+        },
+        dispatch
+    }
+    // return bindActionCreators(userAction,dispatch)
     // {login,logout} 等效于以下代码(bindActionCreators内部帮我们实现了以下代码)
     // {
     //     login: function(user){

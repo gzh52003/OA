@@ -7,13 +7,16 @@ import * as serviceWorker from './serviceWorker';
 import { HashRouter, BrowserRouter } from 'react-router-dom'
 import store from './store';
 import {Provider} from 'react-redux'
+import Test from './router/index'
+import './assets/common/reset.scss';
 
 const Router = process.env.NODE_ENV === 'development' ? HashRouter : BrowserRouter;
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <MyMain />
+     {/*  <MyMain /> */}
+      <Test />
     </Router>
   </Provider>,
   document.getElementById('root')
