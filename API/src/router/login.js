@@ -10,7 +10,7 @@ const {password_privateKey}=require("../config.json");
 
 // 登录
 router.post('/', async (req, res) => {
-    let { username:login, password, vcode, mdl } = req.body;
+    let { username:LoginID, password:Password, vcode, mdl } = req.body;
 
     // 从会话中获取验证码
     // 校验验证码
@@ -22,12 +22,12 @@ router.post('/', async (req, res) => {
 
     // 加密后进行查询
      const hash = crypto.createHash('md5');
-     hash.update(password + password_privateKey); // 加盐 盐值
-     password = hash.digest('hex');
+     hash.update(Password + password_privateKey); // 加盐 盐值
+     Password = hash.digest('hex');
 
-    password = md5(password)
+     Password = md5(Password)
 
-    let result = await mongo.find('user', { login, password },{field: { password: false }});//[{}]
+    let result = await mongo.find('user', { LoginID, Password },{field: { Password: false }});//[{}]
     
     
     if (result.length > 0) {
@@ -37,13 +37,13 @@ router.post('/', async (req, res) => {
         if (mdl === 'true') {
             // token的操作
             
-            authorization = token.create({ login }, '7d')
+            authorization = token.create({ LoginID }, '7d')
         }else{
-            authorization = token.create({ login })
+            authorization = token.create({ LoginID })
         }
         
         result = result[0];
-        let userinfo = await mongo.find('userinfo', { login});
+        let userinfo = await mongo.find('userinfo', { LoginID});
         // Object.assign(result,userinfo);
         result={
             ...userinfo[0]

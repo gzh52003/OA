@@ -91,6 +91,8 @@ async function find(colName, query = {}, options = {}) { // options={litmit:10,s
     }
     let result = collection.find(query,opt); // 50->10
     
+    // 获取查询加过的总数总数
+    const count = await result.count();
 
     // 判断是否要跳过记录
     if (options.skip) {
@@ -119,7 +121,15 @@ async function find(colName, query = {}, options = {}) { // options={litmit:10,s
     result = await result.toArray();
     client.close();
 
-    return result
+    // return result
+    if(options.total==1){
+        return {
+            total:count,
+            data:result
+        }
+    }else{
+        return result;
+    }
 }
 
 async function findcount(colName,query={},options={}){

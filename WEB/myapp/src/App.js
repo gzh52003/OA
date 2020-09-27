@@ -170,7 +170,7 @@ class App extends React.PureComponent {
           path: '/DepartmentList'
         },
         {
-          text: "部门成员添加",
+          text: "部门添加",
           name: "DepartmentAdd",
           icon: <InsertRowAboveOutlined />,
           path: '/DepartmentAdd'

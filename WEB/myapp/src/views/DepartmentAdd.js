@@ -98,12 +98,12 @@ function DepartmentAdd() {
             >
 
                 <Select>
-                    <Select.Option value="1">财务部</Select.Option>
-                    <Select.Option value="2">后勤部</Select.Option>
-                    <Select.Option value="3">公关部</Select.Option>
-                    <Select.Option value="4">技术部</Select.Option>
-                    <Select.Option value="5">运营部</Select.Option>
-                    <Select.Option value="0">其他(领导)</Select.Option>
+                    <Select.Option value="caiwu">财务部</Select.Option>
+                    <Select.Option value="houqin">后勤部</Select.Option>
+                    <Select.Option value="gongguan">公关部</Select.Option>
+                    <Select.Option value="jishu">技术部</Select.Option>
+                    <Select.Option value="yunying">运营部</Select.Option>
+                    <Select.Option value="qita">其他</Select.Option>
                 </Select>
 
             </Form.Item>

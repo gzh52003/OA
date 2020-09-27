@@ -39,7 +39,7 @@ class App extends React.Component {
             <Icon key="1" type="ellipsis" color="#000" />,
           ]}
         >移动门户</NavBar>
-        <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+        <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center',paddingTop:'3rem' }}>
           {
             pageText === "homeTab" ? <Home props={this.props} />
               :
@@ -111,7 +111,7 @@ class App extends React.Component {
             <TabBar.Item
               icon={<UserOutlined />}
               selectedIcon={<UserOutlined />}
-              title="通知"
+              title="我的"
               key="mine"
               selected={this.state.selectedTab === 'mineTab'}
               onPress={() => {

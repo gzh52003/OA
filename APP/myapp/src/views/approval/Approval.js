@@ -18,11 +18,11 @@ import {
 } from '@ant-design/icons';
 import "@/css/approval.scss"
 const menu = [{
-    icon: <FormOutlined path='todolist' />,
+    icon: <FormOutlined path='/list/todo' />,
     text: `待处理`
 
 }, {
-    icon: <AuditOutlined path='donelist' />,
+    icon: <AuditOutlined path='/list/done' />,
     text: `已处理`
 
 }, {
@@ -92,8 +92,8 @@ class Approval extends React.Component{
                 // <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
                 <Icon key="1" type="ellipsis" />,
               ]}
-            >移动门户</NavBar>
-            <div style={{borderTop:'1px solid #E6E6E6',marginBottom:'2rem'}}>
+            >OA审批</NavBar>
+            <div style={{borderTop:'1px solid #E6E6E6',marginBottom:'2rem',marginTop:'3rem',background:'#FAFAFA'}}>
                 <Grid onClick={(el)=>this.goto(el)} data={menu} hasLine={false} columnNum="3" itemStyle={{color:'#FA8258'}}/>
                 <div>
                     {list.map((item) => {

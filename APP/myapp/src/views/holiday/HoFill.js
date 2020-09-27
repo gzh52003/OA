@@ -95,14 +95,19 @@ class HoFill extends React.PureComponent {
     asyncValue: [],
     sValue: ['2013', '春'],
     colorValue: ['#00FF00'],
+    idx:0
   };
   onSelect = (opt) => {
-    // console.log(opt.props.value);
+    console.log(opt.props.value);
     this.setState({
       visible: false,
       selected: opt.props.value,
     });
   };
+  goto(el){
+    // console.log(el.props.value)
+    this.props.history.push("compassLea/"+el.props.value)
+  }
   handleVisibleChange = (visible) => {
     this.setState({
       visible,
@@ -115,10 +120,29 @@ class HoFill extends React.PureComponent {
       });
     }, 120);
   };
+
+
+
+  /* keep-alive */
+  constructor(props) {
+    super(props)
+
+    props.cacheLifecycles.didCache(this.componentDidCache)
+    props.cacheLifecycles.didRecover(this.componentDidRecover)
+  }
+
+  componentDidCache = () => {
+    console.log('List cached')
+  }
+
+  componentDidRecover = () => {
+    console.log('List recovered')
+  }
   
 
     render(){
         console.log("HoFill",this.props)
+
         const { getFieldProps, getFieldError } = this.props.form;
         return(
           <div className="HoFill">
@@ -135,7 +159,7 @@ class HoFill extends React.PureComponent {
                   overlay={[
                     (<Item key="4" value="send" data-seed="logId">转发给同事</Item>),
                     (<Item key="5" value="write" style={{ whiteSpace: 'nowrap' }}>稍后填写</Item>),
-                    (<Item key="6" value="checkRec">
+                    (<Item key="6" value="HoRec">
                       <span style={{ marginRight: 5 }}>查看记录</span>
                     </Item>),
                       (<Item key="7" value="QRCode">
@@ -150,7 +174,7 @@ class HoFill extends React.PureComponent {
                     offset: [-10, 0],
                   }}
                   onVisibleChange={this.handleVisibleChange}
-                  onSelect={this.onSelect}
+                  onSelect={(val)=>this.goto(val)}
                 >
                   <div style={{
                     height: '100%',
@@ -174,19 +198,17 @@ class HoFill extends React.PureComponent {
             {/* Tabs */}
             <div>
                 <Tabs tabs={tabs}
-                  initialPage={0}
-                  onChange={(tab, index) => { console.log('onChange', index, tab); }}
+                  initialPage={this.state.idx}
+                  // onChange={(tab, index) => { console.log('onChange', index, tab); }}
                   onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
                 >
                   <div style={{ display: 'flex'}}>
-                      <Submit />
+                      <Submit fstate={this.state}/>
                   </div>
                   <div style={{ display: 'flex'}}>
-                      <ViewData />
+                      <ViewData  fstate={this.state}/>
                   </div>
-                  
                 </Tabs>
-
               </div>
           </div>
         )

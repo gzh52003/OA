@@ -1,12 +1,15 @@
 import React,{Suspense, lazy } from 'react';
-import { Picker, List, WhiteSpace,Tabs, Badge,NavBar ,Icon,NoticeBar,DatePicker,InputItem ,TextareaItem,ImagePicker, WingBlank, SegmentedControl,Steps, Button,Switch} from 'antd-mobile';
+import { Picker, List, WhiteSpace,Tabs, Badge,NavBar ,Icon,NoticeBar,DatePicker,InputItem ,TextareaItem,ImagePicker, WingBlank, SegmentedControl,Steps, Button,Switch,Toast} from 'antd-mobile';
 import { createForm, formShape } from 'rc-form';
 import arrayTreeFilter from 'array-tree-filter';
 import { district, provinceLite } from 'antd-mobile-demo-data';
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
 // import { createForm } from 'rc-form';
 
+import request from '../../../utils/request';
+
 import '../../../css/Submit.scss';
+import { withRouter } from 'react-router-dom';
 
 const Step = Steps.Step;
 const customIcon = () => (
@@ -95,6 +98,8 @@ const colors = [
 ];
 
 
+
+
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 // GMT is not currently observed in the UK. So use UTC now.
@@ -109,33 +114,33 @@ if (minDate.getDate() !== maxDate.getDate()) {
   minDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
 }
 
-function formatDate(date) {
-  /* eslint no-confusing-arrow: 0 */
-  const pad = n => n < 10 ? `0${n}` : n;
-  const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-  const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-  return `${dateStr} ${timeStr}`;
-}
+// function formatDate(date) {
+//   /* eslint no-confusing-arrow: 0 */
+//   const pad = n => n < 10 ? `0${n}` : n;
+//   const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+//   const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+//   return `${dateStr} ${timeStr}`;
+// }
 
 // If not using `List.Item` as children
 // The `onClick / extra` props need to be processed within the component
-const CustomChildren = ({ extra, onClick, children }) => (
-  <div
-    onClick={onClick}
-    style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-  >
-    {children}
-    <span style={{ float: 'right', color: '#888' }}>{extra}</span>
-  </div>
-);
+// const CustomChildren = ({ extra, onClick, children }) => (
+//   <div
+//     onClick={onClick}
+//     style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
+//   >
+//     {children}
+//     <span style={{ float: 'right', color: '#888' }}>{extra}</span>
+//   </div>
+// );
 
 class Submit extends React.PureComponent {
   state = {
-    checked: false,
-    checked1: true,
+    checked: true,
     files: data,
     multiple: false,
-    date: now,
+    date:now,
+    date1: now,
     time: now,
     utcDate: utcNow,
     dpValue: null,
@@ -144,12 +149,18 @@ class Submit extends React.PureComponent {
     cols: 1,
     pickerValue: [],
     asyncValue: [],
-    sValue: ['2013', '春'],
     visible: false,
     colorValue: ['发起提交'],
+    typeValue:[],
+    autoFocusInst:'',
+    reason:"",
+    number:'',
+    leaveRecList:[],
+    choose:false,
+    add:"+",
   };
   onChange = (files, type, index) => {
-    console.log(files, type, index);
+    console.log("2131231=",files, type, index);
     this.setState({
       files,
     });
@@ -170,28 +181,96 @@ class Submit extends React.PureComponent {
     }, 120);
   };
 
-  componentDidMount() {
-    // this.autoFocusInst.focus();
+  /* 提交事件 */
+  onSubmit = async () =>{
+    // console.log("111222=",this.state.autoFocusInst)
+    if(!this.state.typeValue){
+      alert("请输入请假类型")
+    }else if(!this.state.autoFocusInst && !this.state.reason){
+      alert("请输入请假时长和请假理由")
+    }else{
+      // console.log("111=",this.state.typeValue)
+      const data = await request.post('/leaveRec',{
+        MatterType:this.state.typeValue[0],
+        start:this.state.date,
+        end:this.state.date1,
+        duration:this.state.autoFocusInst,
+        reasons:this.state.reason,
+        UserID:"xiaoli",
+        DepartmentID:"5",
+        ProcName:"xiaoli+"+this.state.typeValue[0],
+        step:'1',
+        CurrentUser:"laowei",
+      });
+    }
   }
+
+  addApp = ()=>{
+    this.props.history.push("/Submit/Select" )
+    // console.log(this)
+  }
+  
+
+  async componentDidMount() {
+    const data = await request.get('/leaveRec',{
+      UserID:"xiaoli"
+    });
+    this.state.leaveRecList = data;
+    this.setState({
+      number:data.length,
+    })
+  }
+
+  changeKeyword = (val) => {
+    this.setState({
+      autoFocusInst:val
+    })
+  }
+  fillReason = (val) => {
+    this.setState({
+      reason:val
+    })
+  }
+
+
   handleClick = () => {
     this.inputRef.focus();
   }
   
 
     render(){
-        console.log("Submit",this.props)
-        const { files } = this.state;
+
+        // console.log("Submit",this.props)
+        const { files,number,add } = this.state;
         const { getFieldProps, getFieldError } = this.props.form;
+        ;
+
+        // console.log("this.state.typeValue=",this.state.typeValue)
+        // console.log("this.state.date=",this.state.date)
+        // console.log("this.state.date1=",this.state.date1)
+        // console.log("this.state.timeLong=",this.state.timeLong)
+
         return(
           <div className="Submit">
+            
             {/* 提示信息 */}
-            <NoticeBar  icon={null}>这是本月第3次提交</NoticeBar>
+            <NoticeBar  icon={null}>这是本月第<span>{number}</span>次提交</NoticeBar>
 
             {/* 请假内容 */}
             <div>
               <List style={{ backgroundColor: 'white' }} className="picker-list">
                 <Picker data={colors} cols={1} {...getFieldProps('district3')} className="forss"
-                onChange={v => console.log(v,a)}>
+                value={this.state.typeValue}
+                onChange={v => {
+                  let obj = {
+                    typeValue:v
+                  }
+                  if(v)obj.choose=true
+                  else obj.choose=false
+                  this.setState(obj);
+                  
+                }}
+                >
                   <List.Item arrow="horizontal">
                     <strong>*</strong>
                     请假类型
@@ -203,11 +282,16 @@ class Submit extends React.PureComponent {
 
             {/* 请假开始时间 */}
             <List className="date-picker-list" style={{ backgroundColor: 'white' }}>
+
               <DatePicker
-                value={this.state.date}
-                onChange={date => this.setState({ date })}
+                value={this.state.date} 
+                disabled={!this.state.choose}
+                
+                // onChange={date => console.log("121323=",date)}
+                onChange={date => this.setState({ date:date })}
               >
                 <List.Item arrow="horizontal">
+                <strong>*</strong>
                   开始时间
                 </List.Item>
               </DatePicker>
@@ -216,51 +300,51 @@ class Submit extends React.PureComponent {
              {/* 请假结束时间 */}
             <List className="date-picker-list" style={{ backgroundColor: 'white' }}>
               <DatePicker
-                value={this.state.date}
-                onChange={date => this.setState({ date })}
+                value={this.state.date1}
+                disabled={!this.state.choose}
+                // onChange={date => console.log("1213233465=",date)}
+                onChange={date1 => this.setState({ date1:date1 })}
               >
                 <List.Item arrow="horizontal">
+                <strong>*</strong>
                   结束时间
                 </List.Item>
               </DatePicker>
             </List>
-
             <List>
             
               <InputItem
                 {...getFieldProps('digit')}
                 type="digit"
                 placeholder="请输入时长"
-              >时长</InputItem>
-              <p className="InputTips">时长将自动计入考勤统计</p>
+                // onBlur={date => console.log("121323=",date)}
+                value={this.state.autoFocusInst}
+                onChange={this.changeKeyword} 
+                editable={this.state.choose}
+              >
+                <strong>*</strong>
+                时长</InputItem>
+              <p className="InputTips">
+                时长将自动计入考勤统计</p>
             </List>
 
-        
-
-
-
             <div>
-            {/* <List>
-              <TextareaItem
-                title="标题"
-                placeholder="auto focus in Alipay client"
-                data-seed="logId"
-                ref={el => this.autoFocusInst = el}
-                autoHeight
-              />
-            </List> */}
-          
               <List>
                 <TextareaItem
                   {...getFieldProps('note3')}
-                  title="请假事由"
+                  // title="请假事由"
+                  title={<p><strong>*</strong><span>请假事由</span></p>}
                   autoHeight
                   labelNumber={5}
+                  editable={this.state.choose}
                 />
                 <TextareaItem
                   {...getFieldProps('note1')}
                   rows={3}
                   placeholder="请输入请假事由"
+                  value={this.state.reason}
+                  onChange={this.fillReason} 
+                  editable={this.state.choose}
                 />
               </List>
             </div>
@@ -291,14 +375,23 @@ class Submit extends React.PureComponent {
             <List className="process">
               <p className="processTit">流程</p> 
               <Steps current={0}>
-                <Step title="审批人" description={<div>
-                  <a href="" className="addApproval">+</a>
+                <Step title="审批人"
+                // icon={path="add/asrty"}
+                description={
+                <div>
+                  <div href="" className="addApproval" onClick={this.addApp}>{this.state.add}</div>
                 </div>}/>
-                {/* <Button>default</Button> */}
-                <Step title="抄送人" description={<div>
-                  <a href="" className="addCC">+</a>
+    
+                <Step title="抄送人" description={
+                <div>
+                  <a href="" className="addCC" onClick={this.addCC}>+</a>
                 </div>} />
               </Steps>
+             
+            </List>
+
+            {/* 通过日历 */}
+            <List>
               <List.Item
                 extra={<Switch
                   checked={this.state.checked}
@@ -309,51 +402,23 @@ class Submit extends React.PureComponent {
                   }}
                   color="#108ee9"
                 />}
-              >通过聊天发送给审批人</List.Item>
-              <TextareaItem
-                  {...getFieldProps('note1')}
-                  rows={3}
-                  placeholder="给对方留言"
-                />
-
-            </List>
-            
-
-
-
-            {/* 通过日历 */}
-            <List>
-              <List.Item
-                extra={<Switch
-                  checked={this.state.checked1}
-                  onChange={() => {
-                    this.setState({
-                      checked: !this.state.checked1,
-                    });
-                  }}
-                  color="#108ee9"
-                />}
               >通过后同步到我的日历</List.Item>
-              
-                
-              
             </List>
 
             <List>
               <p className="doubtTit">
                 <a href="">有疑问? 找钉小秘</a>
               </p>
-             
             </List>
 
             <List className="submitButton">
-              <Button type="primary">提交</Button>
+              <Button type="primary" 
+              disabled={!this.state.choose}
+              onClick={this.onSubmit}>提交</Button>
             </List>
-
-
           </div>
         )
     }
 }
-
+  Submit = withRouter(Submit)
 export default createForm()(Submit);

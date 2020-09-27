@@ -38,10 +38,11 @@ const data = Array.from(menu).map((_val, i) => ({
   icon:_val.icon,
   text:_val.text
 }));
-function goto({props},el){
-        console.log("12345",el);
-        props.history.push(el.icon.props.path);
-    }
+function goto({props},el,path){
+        
+        if(el) return props.history.push(el.icon.props.path);
+        props.history.push(path);
+}
 function Home(props){
     console.log("props",props);
     // render(){
@@ -67,13 +68,11 @@ function Home(props){
                         Title <Brief>subtitle</Brief>
                         </Item>
                     </Card.Body>
-                    <Card.Footer extra={<div style={{height:'1.5rem',lineHeight: '1.5rem',color:'#FA8258'}}>查看更多<span style={{color:'#FF0000'}}>(1)</span></div>}>
+                    <Card.Footer onClick={()=>{goto(props,null,'/list/todo')}} extra={<div style={{height:'1.5rem',lineHeight: '1.5rem',color:'#FA8258'}}>查看更多<span style={{color:'#FF0000'}}>(1)</span></div>}>
                     </Card.Footer>
                     </Card>
                 </div>  
             </div>
-            
-            
         )
     // }
     
