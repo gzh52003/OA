@@ -19,7 +19,7 @@ const Performan = lazy(() => import("~/Performan"));
 const Login = lazy(() => import("./views/Login"));
 const HoFill = lazy(() => import("~/holiday/HoFill"));
 const HoRec = lazy(() => import("~/holiday/HoRec"));
-const Select = lazy(() =>  import('~/holiday/Select');
+const Select = lazy(() =>  import('~/holiday/Select'));
 
 @withRouter
 class main extends React.Component {
