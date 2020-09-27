@@ -16,7 +16,7 @@ class MineTab extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div style={{fontSize:'1rem'}}>
                 <div className="minebody">
                     <div className="xx">
                         <h1 className="mtitle">个人信息</h1>

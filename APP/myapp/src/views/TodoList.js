@@ -1,6 +1,6 @@
 import React from 'react'
 import { List,ListView } from 'antd-mobile';
-// import { Grid, NavBar, Icon, TabBar, WhiteSpace,Card } from 'antd-mobile';
+import { Grid, NavBar, Icon, TabBar, WhiteSpace,Card } from 'antd-mobile';
 import {
   EditTwoTone
 } from '@ant-design/icons';
@@ -121,6 +121,8 @@ const data = [
           const obj = datalist[index--];
           console.log("obj",obj);
           return (
+            // <>
+            
             <div key={rowID} style={{ padding: '0 15px' }}>
               
               {/* <div style={{ display: '-webkit-box', display: 'flex', padding: '15px 0' }}>
@@ -138,6 +140,7 @@ const data = [
                         <Brief>{obj.dept}-{obj.username} &nbsp; 送达时间:{obj.createDate}</Brief>
               </Item>
             </div>
+            // </>
           );
         };
   
@@ -145,7 +148,15 @@ const data = [
             <ListView
               ref={el => this.lv = el}
               dataSource={this.state.dataSource}
-              renderHeader={() => <span>header</span>}
+              renderHeader={() => <NavBar
+                mode="light"
+                icon={<Icon type="left" color="#000" />}
+                onLeftClick={() => { this.props.history.goBack(); console.log("---------", history, this) }}
+                rightContent={[
+                  // <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
+                  <Icon key="1" type="ellipsis" color="#000" />,
+                ]}
+              >{this.props.match.params.isTodo === 'todo'?'待处理事项':'已处理事项'}</NavBar>}
               renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
                 {this.state.isLoading ? '加载中...' : '加载更多'}
               </div>)}
@@ -153,6 +164,7 @@ const data = [
               renderSeparator={separator}
               className="am-list"
               // pageSize={4}
+              style={{marginTop:'3rem'}}
               useBodyScroll
               onScroll={() => {  }}
               scrollRenderAheadDistance={500}

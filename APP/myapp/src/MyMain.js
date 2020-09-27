@@ -2,14 +2,23 @@ import React, { Suspense, lazy } from 'react';
 import { HashRouter, BrowserRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from 'react-router-dom'
 
 import App from './App'
-import TodoList from '~/TodoList'
-import Approval from '~/approval/Approval'
-import Holidays from '~/holiday/Holidays'
-import Performan from '~/Performan'
-import Login from './views/Login'
+// const Login = lazy(() => import("./views/Login"));
+// import TodoList from '~/TodoList'
+// import Approval from '~/approval/Approval'
+// import Holidays from '~/holiday/Holidays'
+// import Performan from '~/Performan'
+// import Login from './views/Login'
 import './assets/common/reset.scss';
-import HoFill from '~/holiday/HoFill';
-import HoRec from '~/holiday/HoRec';
+// import HoFill from '~/holiday/HoFill';
+// import HoRec from '~/holiday/HoRec';
+
+const TodoList = lazy(() => import("~/TodoList"));
+const Approval = lazy(() => import("~/approval/Approval"));
+const Holidays = lazy(() => import("~/holiday/Holidays"));
+const Performan = lazy(() => import("~/Performan"));
+const Login = lazy(() => import("./views/Login"));
+const HoFill = lazy(() => import("~/holiday/HoFill"));
+const HoRec = lazy(() => import("~/holiday/HoRec"));
 
 
 @withRouter
