@@ -4,6 +4,7 @@ import { FrontendAuth } from './frontend-auth'
 import { routerConfig } from './router'
 import CacheRoute, { CacheSwitch } from 'react-router-cache-route'
 
+
 @withRouter
 export class Router extends React.Component{
     render(){

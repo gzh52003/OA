@@ -157,6 +157,7 @@ class Submit extends React.PureComponent {
     number:'',
     leaveRecList:[],
     choose:false,
+    add:"+",
   };
   onChange = (files, type, index) => {
     console.log("2131231=",files, type, index);
@@ -190,12 +191,16 @@ class Submit extends React.PureComponent {
     }else{
       // console.log("111=",this.state.typeValue)
       const data = await request.post('/leaveRec',{
-        type:this.state.typeValue[0],
+        MatterType:this.state.typeValue[0],
         start:this.state.date,
         end:this.state.date1,
         duration:this.state.autoFocusInst,
         reasons:this.state.reason,
-        username:"xiaoli",
+        UserID:"xiaoli",
+        DepartmentID:"5",
+        ProcName:"xiaoli+"+this.state.typeValue[0],
+        step:'1',
+        CurrentUser:"laowei",
       });
     }
   }
@@ -208,11 +213,9 @@ class Submit extends React.PureComponent {
 
   async componentDidMount() {
     const data = await request.get('/leaveRec',{
-      username:"xiaoli"
+      UserID:"xiaoli"
     });
     this.state.leaveRecList = data;
-    // console.log("data",data);
-    // console.log("data",data.length);
     this.setState({
       number:data.length,
     })
@@ -230,9 +233,6 @@ class Submit extends React.PureComponent {
   }
 
 
-  
-
-
   handleClick = () => {
     this.inputRef.focus();
   }
@@ -241,7 +241,7 @@ class Submit extends React.PureComponent {
     render(){
 
         // console.log("Submit",this.props)
-        const { files,number } = this.state;
+        const { files,number,add } = this.state;
         const { getFieldProps, getFieldError } = this.props.form;
         ;
 
@@ -379,7 +379,7 @@ class Submit extends React.PureComponent {
                 // icon={path="add/asrty"}
                 description={
                 <div>
-                  <div href="" className="addApproval" onClick={this.addApp}>+</div>
+                  <div href="" className="addApproval" onClick={this.addApp}>{this.state.add}</div>
                 </div>}/>
     
                 <Step title="抄送人" description={

@@ -3,6 +3,7 @@ const router = express.Router();
 // const query = require('../utils/mysql');
 const mongo = require('../utils/mongo');
 const { formatData,UUID } = require('../utils/tools')
+const { send,insertwf_proc,insertwf_task } = require('../utils/public')
 
 
 
@@ -180,34 +181,56 @@ const { formatData,UUID } = require('../utils/tools')
 
 router.post('/', async (req, res) => {
     const uuid = UUID();
-    let { type , start , end ,reasons,username} = req.body;
-    console.log(req.body);
+    let appOption = "处理中";
+    let { MatterType , start , end ,reasons,UserID,DepartmentID,ProcName,step,CurrentUser} = req.body;
+    // console.log(req.body);
     let result
+    let data={
+        "MatterType":MatterType,
+        "start":start,
+        "end":end,
+        "reasons":reasons,
+        "UserID":UserID,
+        "DepartmentID":DepartmentID,
+        "ProcName":ProcName,
+        "step":step,
+        "CurrentUser":CurrentUser,
+        "BusinessID":uuid,
+        "option":appOption,
+    }
+    console.log("data=",data)
+
     try {
-        result = await mongo.insert('leaveRec', { type , start , end, id:uuid,reasons,username });
-
+        
+        result = await mongo.insert('leaveRec', { MatterType , start , end, id:uuid,option:appOption,reasons,UserID,DepartmentID,ProcName,step,CurrentUser });
+        // console.log("resultlalala=",result)
+        const List =await send(data);
+        // console.log("List=",List);
         res.send(formatData());
+        return List
     } catch (err) {
-        res.send(forMatData({ code: 0 }))
-
+        res.send(formatData({ code: 0 }))
     }
 })
 
 router.get('/', async (req, res) => {
-    let { page = 1, size, sort = "add_time",username,filedtype, value } = req.query;
+    let { page = 1, size, sort = "add_time",UserID} = req.query;
     const skip = (page - 1) * size; //0
     const limit = size * 1; //10  
     let obj = {};
     // console.log("value", value);
     // value ? obj[filedtype] = value : "";
-    obj["username"] = "xiaoli",
+    obj["UserID"] = "xiaoli",
+    // obj["DepartmentID"] = "5",
+    // obj["ProcName"] = ProcName,
+    // obj["step"] = step,
     // console.log(username)
     // 处理排序参数
     sort = sort.split(',');// ['price'],['price','-1']
     // 查询所有商品
     const result = await mongo.find("leaveRec", obj, { skip, sort, limit })
-    console.log("obj", obj);
-    console.log("result", result);
+    // console.log("obj", obj);
+    // console.log("result", result);
     res.send(result);
 })
 
@@ -220,6 +243,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const result = await mongo.remove('leaveRec', { _id: { $in: ids }})
         res.send('success')
+        console.log("result=",result);
     } catch (err) {
         console.log(err);
         res.send('fail');
