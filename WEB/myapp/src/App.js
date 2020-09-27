@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import logo from './logo.svg';
 import './App.scss';
 import { HashRouter, BrowserRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Button } from 'antd';
 import {
   HomeOutlined,
   FileDoneOutlined,
@@ -25,9 +25,10 @@ import {
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 // @withRouter
-
+import LoginApp from './LoginApp';
 //引入页面组件
-const Home = lazy(() => import("./views/Home"));
+// const Home = import("./views/Home");
+import Home from "./views/Home";
 const ToDone = lazy(() => import("./views/ToDone"));
 const ToDoListAll = lazy(() => import("./views/ToDoListAll"));
 const ToDoneAll = lazy(() => import("./views/ToDoneAll"));
@@ -41,9 +42,9 @@ const UserList = lazy(() => import("./views/UserList"));
 const UserAdd = lazy(() => import("./views/UserAdd"));
 const DepartmentList = lazy(() => import("./views/DepartmentList"));
 const DepartmentAdd = lazy(() => import("./views/DepartmentAdd"));
-// const Login = lazy(() => import("./Login/Login"));
+const Login = lazy(() => import("./Login/Login"));
 
-
+//点击退出
 
 class App extends React.PureComponent {
   state = {
@@ -59,11 +60,11 @@ class App extends React.PureComponent {
       name: "ToDone",
       icon: <ScheduleOutlined />,
       path: '/AllList/todo'
-    },{
+    }, {
       text: "我的已办",
       name: "ToDone",
       icon: <FileDoneOutlined />,
-      path:'/AllList/done'
+      path: '/AllList/done'
       // path: '/ToDone'
     },
     {
@@ -75,7 +76,7 @@ class App extends React.PureComponent {
     ],
     /* 二级菜单 */
     secmenu: [
-      /* [
+      [
         {
           text: "我的待办",
           name: "ToDoList",
@@ -105,8 +106,8 @@ class App extends React.PureComponent {
           icon: <ContactsOutlined />,
           path: '/VacDays'
         }
-      ], */
-      /* [
+      ],
+      [
         {
           text: "发起事件",
           name: "InitiatingMatters",
@@ -136,7 +137,7 @@ class App extends React.PureComponent {
           icon: <TagsOutlined />,
           path: '/Other'
         },
-      ], */
+      ],
       [
         {
           text: "用户管理",
@@ -178,8 +179,6 @@ class App extends React.PureComponent {
     ],
     collapsed: false,
   }
-
-
   gotoPage = ({ key }) => {
     this.setState({
       current: key
@@ -190,95 +189,123 @@ class App extends React.PureComponent {
   goto = (path) => {
     this.props.history.push(path);
   }
+  componentWillMount() {
+    const { pathname } = this.props.location;
+    this.setState({
+      current: pathname
+    })
 
-  onCollapse = collapsed => {
-    console.log(collapsed);
-    this.setState({ collapsed });
+
+  }
+
+  Loginout = () => {
+    // console.log(666666);
+    localStorage.removeItem('token')
+    this.props.history.push('/Login')
+    console.log('appproprs', this.props.history.push);
+    this.render()
   }
 
   render() {
-    console.log('App.props', this.props)
-    const { menu, secmenu } = this.state;
-    return (
-      <div className="App">
-        <Layout>
-          <Header className="header">
-            <div className="logo">
-              <img src="../logo.png" alt="" />
-              <span>后台管理系统</span>
-            </div>
-          </Header>
-          <Layout style={{ minHeight: '100vh' }}>
-            <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-              <div className="logo" />
-              <Menu onClick={this.gotoPage}
-                theme="dark" defaultSelectedKeys={['1']} >
-                {
-                  menu.map(item =>
-                    <Menu.Item key={item.path} icon={item.icon}>
-                      {item.text}
-                    </Menu.Item>
-                  )
-                }
-                {/* 渲染二层菜单 */}
-                {secmenu.map(item => {
-                  return (
-                    <SubMenu
-                      key={item[0].name}
-                      icon={item[0].icon}
-                      title={item[0].text}
-                    >
-                      {item.map((secitem, index) => {
-                        if (index != 0) {
-                          return (
-                            <Menu.Item key={secitem.path} icon={secitem.icon}>
-                              {secitem.text}
-                            </Menu.Item>
-                          );
-                        }
-                      })}
-                    </SubMenu>
-                  );
-                })}
-              </Menu>
-            </Sider>
-            <Layout style={{ padding: '0 24px 24px' }}>
-              <Content
-                className="site-layout-background"
-                style={{
-                  padding: 10,
-                  margin: 0,
-                  minHeight: 280,
-                }}
-              >
-                <Suspense fallback={<div>loading...</div>}>
-                  <Switch>
-                    <Route path="/Home" component={Home} />
-                    <Route path="/ToDone" component={ToDone} />
-                    <Route path="/AllList/:ShowType" component={ToDoListAll} />
-                    <Route path="/ToDoneAll" component={ToDoneAll} />
-                    <Route path="/ToDoneAllYes" component={ToDoneAllYes} />
-                    <Route path="/VacDays" component={VacDays} />
-                    <Route path="/PersonnelMan" component={PersonnelMan} />
-                    <Route path="/VacMan" component={VacMan} />
-                    <Route path="/AdminMan" component={AdminMan} />
-                    <Route path="/Other" component={Other} />
-                    <Route path="/UserList" component={UserList} />
-                    <Route path="/UserAdd" component={UserAdd} />
-                    <Route path="/DepartmentList" component={DepartmentList} />
-                    <Route path="/DepartmentAdd" component={DepartmentAdd} />
-                    {/* <Route path="/Login" component={Login} /> */}
-                    <Route path="/notfound" render={() => <div>404</div>} />
-                    <Redirect from="/" to="/Home" exact />
-                  </Switch>
-                </Suspense>
-              </Content>
-            </Layout>
-          </Layout>
-        </Layout>
 
-      </div>
-    );
+    let user = localStorage.getItem("token")
+    let username = '';
+    let RolesID = '';
+    if (!user) {
+      username = ""
+    } else {
+      user = user.split(',')
+      username = user[0].slice(2, -1)
+      //角色
+      RolesID = user[1].slice(1, -2)
+    }
+    const { menu, secmenu } = this.state;
+    if (!user) {
+      return <LoginApp />
+    } else {
+      return (
+        <div className="App">
+          {<Layout>
+            <Header className="header">
+              <div className="logo">
+                <img src="../logo.png" alt="" />
+                <span>后台管理系统</span>
+                {/* onClick={() => { this.Loginout }} */}
+                <em style={{ position: "absolute", right: '70px', top: '5px', fontSize: '16px' }}>欢迎{username}！</em>
+                <Button type="link" style={{ position: "absolute", right: '10px', top: '14px' }} onClick={this.Loginout}>退出</Button >
+              </div>
+
+            </Header>
+            <Layout style={{ minHeight: '100vh' }}>
+              <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+                <div className="logo" />
+                <Menu onClick={this.gotoPage}
+                  theme="dark" defaultSelectedKeys={['1']} >
+                  {
+                    menu.map(item =>
+                      <Menu.Item key={item.path} icon={item.icon}>
+                        {item.text}
+                      </Menu.Item>
+                    )
+                  }
+                  {/* 渲染二层菜单 */}
+                  {secmenu.map(item => {
+                    return (
+                      <SubMenu
+                        key={item[0].name}
+                        icon={item[0].icon}
+                        title={item[0].text}
+                      >
+                        {item.map((secitem, index) => {
+                          if (index != 0) {
+                            return (
+                              <Menu.Item key={secitem.path} icon={secitem.icon}>
+                                {secitem.text}
+                              </Menu.Item>
+                            );
+                          }
+                        })}
+                      </SubMenu>
+                    );
+                  })}
+                </Menu>
+              </Sider>
+              <Layout style={{ padding: '0 24px 24px' }}>
+                <Content
+                  className="site-layout-background"
+                  style={{
+                    padding: 10,
+                    margin: 0,
+                    minHeight: 280,
+                  }}
+                >
+                  <Suspense fallback={<div>loading...</div>}>
+                    <Switch>
+                      <Route path="/Home" component={Home} />
+                      <Route path="/ToDone" component={ToDone} />
+                      <Route path="/AllList/:ShowType" component={ToDoListAll} />
+                      <Route path="/ToDoneAll" component={ToDoneAll} />
+                      <Route path="/ToDoneAllYes" component={ToDoneAllYes} />
+                      <Route path="/VacDays" component={VacDays} />
+                      <Route path="/PersonnelMan" component={PersonnelMan} />
+                      <Route path="/VacMan" component={VacMan} />
+                      <Route path="/AdminMan" component={AdminMan} />
+                      <Route path="/Other" component={Other} />
+                      <Route path="/UserList" component={UserList} />
+                      <Route path="/UserAdd" component={UserAdd} />
+                      <Route path="/DepartmentList" component={DepartmentList} />
+                      <Route path="/DepartmentAdd" component={DepartmentAdd} />
+                      <Route path="/notfound" render={() => <div>404</div>} />
+                      <Redirect from="/" to="/Home" exact />
+                    </Switch>
+                  </Suspense>
+                </Content>
+              </Layout>
+            </Layout>
+          </Layout>}
+        </div >
+      );
+    }
   }
 
 }

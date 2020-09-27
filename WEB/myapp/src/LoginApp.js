@@ -28,28 +28,32 @@ class LoginApp extends React.PureComponent {
 
 
     render() {
-        console.log('App.props', this.props)
+        // console.log('App.props', this.props)
         const { menu, secmenu } = this.state;
+        // const { currentUser, logout } = this.props;
         return (
-            <div className="LoginApp">
-                <Layout>
+            <div className="loginAppContent">
+                <div className="LoginApp">
                     <Layout>
-                        <Content>
-                            <Suspense fallback={<div>loading...</div>}>
-                                <Switch>
-                                    <Route path="/Login" component={Login} />
-                                    <Route path="/notfound" render={() => <div>404</div>} />
-                                    <Redirect from="/" to="/Login" exact />
-                                </Switch>
-                            </Suspense>
-                        </Content>
+                        <Layout>
+                            <Content>
+                                <Suspense fallback={<div>loading...</div>}>
+                                    <Switch>
+                                        <Route path="/Login" component={Login} />
+                                        <Route path="/notfound" render={() => <div>404</div>} />
+                                        <Redirect from="/" to="/Login" exact />
+                                    </Switch>
+                                </Suspense>
+                            </Content>
+                        </Layout>
                     </Layout>
-                </Layout>
-            </div >
+                </div >
+            </div>
+
         );
     }
 
 }
 
-LoginApp = withRouter(LoginApp);
+//LoginApp = withRouter(LoginApp);
 export default LoginApp;

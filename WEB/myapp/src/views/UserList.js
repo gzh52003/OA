@@ -1,21 +1,12 @@
 //用户列表
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Breadcrumb, Input, Button, Table, Radio, Divider, InputNumber, Popconfirm, Form } from 'antd';
 import { HomeOutlined, UserOutlined, SolutionOutlined, AudioOutlined } from '@ant-design/icons';
 import '../css/User.scss';
-
+import { request } from '@/utils'
 const { Search } = Input;
+//状态 数据源
 const originData = [];
-
-for (let i = 0; i < 100; i++) {
-    originData.push({
-        key: i.toString(),
-        num: i + 1,
-        name: `Edrward ${i}`,
-        position: `jl`,
-        jurisdiction: `London Park no. ${i}`,
-    });
-}
 
 const EditableCell = ({
     editing,
@@ -51,8 +42,8 @@ const EditableCell = ({
         </td>
     );
 };
-
 const UserList = () => {
+
     const [form] = Form.useForm();
     const [data, setData] = useState(originData);
     const [editingKey, setEditingKey] = useState('');
@@ -60,24 +51,88 @@ const UserList = () => {
     const isEditing = (record) => record.key === editingKey;
     //修改
     const edit = (record) => {
+        console.log('record,', record);
         form.setFieldsValue({
-            num: '',
-            loginname: '',
-            name: '',
-            position: '',
-            jurisdiction: '',
+            LoginID: '',
+            Name: '',
+            RolesID: '',
+            DepartmentID: '',
             ...record,
         });
+        console.log('edit', record);
+
         setEditingKey(record.key);
+        // console.log('edit');
     };
 
-    const remove = (id) => {
-        console.log(8888);
+    const remove = (row) => {
+        let id = row._id;
+        // console.log(id);row
+
+        (async function () {
+            //拿到数据
+            let data = await request.remove('/user/' + id)
+
+            console.log("执行改变数据", data);
+            if (data !== 0) {
+                console.log(234);
+                let { data: udata } = await request.get('/user')
+                udata.forEach((item, idx) => {
+                    item.key = idx + 1
+                })
+                setData(udata)
+            }
+
+        })()
+
     };
 
     const cancel = () => {
         setEditingKey('');
     };
+
+
+    // -----------------------------------------------------------
+    //渲染数据
+    //获取数据
+
+    useEffect(function () {
+
+        (async function () {
+            //拿到数据
+            let { data: udata } = await request.get('/user')
+            console.log("执行改变数据", udata);
+
+            udata.forEach((item, idx) => {
+                item.key = idx + 1
+            })
+            setData(udata)
+        })()
+
+    }, [])
+
+
+
+
+
+    // ----------------------------------------------------------------
+
+
+
+
+    /* 
+        const save = async (key) => {
+            try {
+                console.log('save', key);
+                const row = await form.validateFields();
+                const newData = [...data];
+                console.log('newData', newData);
+                const index = newData.findIndex((item) => key === item.key);
+    
+            } catch (errInfo) {
+                console.log('Validate Failed:', errInfo);
+            }
+        }; */
 
     const save = async (key) => {
         try {
@@ -90,6 +145,14 @@ const UserList = () => {
                 newData.splice(index, 1, { ...item, ...row });
                 setData(newData);
                 setEditingKey('');
+                let id = newData[key - 1]._id
+                console.log('newData', newData[key - 1], id);
+                let { data } = await request.put('/user/' + id,
+                    {
+                        ...newData[key - 1]
+                    })
+                console.log('savedata', data);
+
             } else {
                 newData.push(row);
                 setData(newData);
@@ -100,34 +163,43 @@ const UserList = () => {
         }
     };
 
+
+
+
+
+
+
+
+
+
     const columns = [
         {
             title: '#',
-            dataIndex: 'num',
+            dataIndex: 'key',
             width: '10%',
             editable: true,
         },
         {
             title: '登录名',
-            dataIndex: 'loginname',
+            dataIndex: 'LoginID',
             width: '20%',
             editable: true,
         },
         {
             title: '用户名',
-            dataIndex: 'name',
+            dataIndex: 'Name',
             width: '25%',
             editable: true,
         },
         {
             title: '职位',
-            dataIndex: ' position',
+            dataIndex: 'RolesID',
             width: '15%',
             editable: true,
         },
         {
             title: '部门',
-            dataIndex: 'jurisdiction',
+            dataIndex: 'DepartmentID',
             width: '20%',
             editable: true,
         },
@@ -139,7 +211,7 @@ const UserList = () => {
                 return (editable ? (
                     <span>
                         <a
-                            href="javascript:;"
+                            // href="javascript:;"
                             onClick={() => save(record.key)}
                             style={{
                                 marginRight: 8,
@@ -216,9 +288,11 @@ const UserList = () => {
                     }}
                 />
             </Form>
-        </div>
-
+        </div >
     );
-};
+
+}
+    ;
+
 
 export default UserList;

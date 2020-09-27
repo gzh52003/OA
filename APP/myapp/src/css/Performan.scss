@@ -11,13 +11,9 @@ html,body{
 .am-navbar-title{
     font-size:20px;
 }
-.am-tabs-default-bar-content{
+.pertab .am-tabs--top .am-tabs-default-bar-content{
     margin-top: 50px;
-    height:50px;
-    // margin-bottom: 15px;
-    // background-color: aqua;
-    // border-bottom: 20px solid #F7F7F7;
-   
+    height:50px; 
 }
 .am-search {
     border-bottom: 1px solid #ddd;
@@ -44,7 +40,7 @@ html,body{
     color: #ccc;
     line-height: 20px;
 }
-.am-list{
+.kong .am-list{
     width:100%;
     display: block;
     // margin-top: 10px;
