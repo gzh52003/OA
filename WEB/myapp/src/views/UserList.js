@@ -51,7 +51,6 @@ const UserList = () => {
     const isEditing = (record) => record.key === editingKey;
     //修改
     const edit = (record) => {
-        console.log('record,', record);
         form.setFieldsValue({
             LoginID: '',
             Name: '',
@@ -82,7 +81,6 @@ const UserList = () => {
                 })
                 setData(udata)
             }
-
         })()
 
     };
@@ -112,28 +110,14 @@ const UserList = () => {
     }, [])
 
 
+    const mhsearch = (value) => {
 
+        console.log('valuevalue', value);
 
+    };
 
     // ----------------------------------------------------------------
-
-
-
-
-    /* 
-        const save = async (key) => {
-            try {
-                console.log('save', key);
-                const row = await form.validateFields();
-                const newData = [...data];
-                console.log('newData', newData);
-                const index = newData.findIndex((item) => key === item.key);
-    
-            } catch (errInfo) {
-                console.log('Validate Failed:', errInfo);
-            }
-        }; */
-
+    //保存
     const save = async (key) => {
         try {
             const row = await form.validateFields();
@@ -162,15 +146,6 @@ const UserList = () => {
             console.log('Validate Failed:', errInfo);
         }
     };
-
-
-
-
-
-
-
-
-
 
     const columns = [
         {
@@ -270,7 +245,9 @@ const UserList = () => {
                     <span>用户列表</span>
                 </Breadcrumb.Item>
             </Breadcrumb>
-            <Search placeholder="请输入关键字" enterButton className="shuru" />
+            {/* 搜索 */}
+
+            <Search placeholder="请输入关键字" enterButton className="shuru" onClick={() => mhsearch(value)} />
             {/* 渲染的表格 */}
             <Form form={form} component={false} className="ulxr">
                 <Table

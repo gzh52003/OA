@@ -16,7 +16,6 @@ import Login from "./Login"
 
 
 @connect((state) => {
-    // console.log('state', state.user);
     return {
         currentUser: state.user
     }
@@ -31,7 +30,8 @@ class MineTab extends React.Component {
         let Loginout1 = (props) => {
             localStorage.removeItem('currentUser')
             // ???????????????????????????
-            console.log('hhhhhhhhhhhhhh', this.props.props.history.push('../../../login'));
+            console.log(this.props);
+            console.log('hhhhhhhhhhhhhh', this.props.props.history.replace('/login'));
             currentUser.Name = ''
             currentUser.Phone = ''
             currentUser.LoginID = ''
