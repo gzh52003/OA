@@ -15,8 +15,8 @@ const Router = process.env.NODE_ENV === 'development' ? HashRouter : BrowserRout
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-     {/*  <MyMain /> */}
-      <Main />
+     <MyMain />
+      {/*  <Main /> */}
     </Router>
   </Provider>,
   document.getElementById('root')
