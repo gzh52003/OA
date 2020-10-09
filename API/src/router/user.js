@@ -22,11 +22,14 @@ router.post('/', async (req, res) => {
     }
 })
 
+
+//数据查询
 router.get('/', async (req, res) => {
     console.log("user:");
 
     // mongo
-    const { page = 1, size = 10 } = req.query;
+    const { page = 1, size } = req.query;
+    // console.log('DepartmentID', DepartmentID);
     const limit = size * 1;
     const skip = (page - 1) * size;
     try {
@@ -38,6 +41,26 @@ router.get('/', async (req, res) => {
     }
 
 })
+
+//根据部门查询
+router.get('/Department', async (req, res) => {
+    console.log("user:");
+
+    // mongo
+    const { page = 1, size = 10, DepartmentID = 0 } = req.query;
+    console.log('DepartmentID', DepartmentID);
+    const limit = size * 1;
+    const skip = (page - 1) * size;
+    try {
+        const result = await mongo.find('user', { DepartmentID }, { limit, skip, field: { password: false } })
+        console.log('result', result);
+        res.send(formatData({ data: result }));
+    } catch (err) {
+        res.send(formatData({ code: 0 }))
+    }
+
+})
+
 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
@@ -84,14 +107,26 @@ router.get('/:id', async (req, res) => {
     res.send(formatData({ data: result }));
 })
 
+//模糊搜索
+router.get('/mhsearch', async (req, res) => {
+    // mongo
+    const { pageNum, pageSize, fieldtype, value } = req.query;
+    const limit = pageSize * 1;
+    const skip = (pageNum - 1) * pageSize;
+    let o = {};
+    value ? o[fieldtype] = value * 1 : "";
+    console.log(o);
+    const result = await mongo.find('order', o, { limit, skip })
+    res.send(formatData({ data: result }));
+})
 
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    let { LoginID, Name, RolesID, DepartmentID } = req.body;
+    let { LoginID, Name, RolesID, DepartmentID, Age, Gender } = req.body;
 
 
-    let newData = { LoginID, Name, RolesID, DepartmentID }
+    let newData = { LoginID, Name, RolesID, DepartmentID, Age, Gender }
     /*  if (password) {
          password = md5(password);
          newData.password = password

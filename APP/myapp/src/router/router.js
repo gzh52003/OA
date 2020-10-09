@@ -8,8 +8,8 @@ const Holidays = lazy(() => import("~/holiday/Holidays"));
 const Performan = lazy(() => import("~/Performan"));
 const HoFill = lazy(() => import("~/holiday/HoFill"));
 const HoRec = lazy(() => import("~/holiday/HoRec"));
-const Select = lazy(() =>  import('~/holiday/Select'));
-const ERROR = lazy(() =>  import('~/err/error'));
+const Select = lazy(() => import('~/holiday/Select'));
+const ERROR = lazy(() => import('~/err/error'));
 
 
 export const routerConfig = [
@@ -52,7 +52,7 @@ export const routerConfig = [
         auth:true,
         type:'CacheRoute'
     },{
-        path:'/Performan',
+        path:'/performan',
         component:Performan,
         auth:true,
         type:'CacheRoute'

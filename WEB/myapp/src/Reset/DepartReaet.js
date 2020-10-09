@@ -1,9 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
-const originData = [];
+import { request } from '@/utils'
 import '../css/User.scss';
-for (let i = 0; i < 100; i++) {
+/* for (let i = 0; i < 100; i++) {
     originData.push({
         key: i.toString(),
         name: `Edrward ${i}`,
@@ -12,8 +12,8 @@ for (let i = 0; i < 100; i++) {
         position: `London Park no. ${i}`,
     });
 }
-
-
+ */
+const originData = [];
 const EditableCell = ({
     editing,
     dataIndex,
@@ -36,7 +36,7 @@ const EditableCell = ({
                     rules={[
                         {
                             required: true,
-                            message: `Please Input ${title}!`,
+                            message: `请填写 ${title}!`,
                         },
                     ]}
                 >
@@ -48,34 +48,78 @@ const EditableCell = ({
         </td>
     );
 };
-
-const DepartReaet = () => {
+//函数开始
+const DepartReaet = ({ k }) => {
+    console.log('kkkk', k);
     const [form] = Form.useForm();
     const [data, setData] = useState(originData);
     const [editingKey, setEditingKey] = useState('');
 
     const isEditing = (record) => record.key === editingKey;
 
+
+    //渲染数据
+
+    useEffect(function () {
+
+        (async function () {
+            let DepartmentID = k
+            //拿到数据
+            let { data: udata } = await request.get('/user/Department', { DepartmentID })
+            console.log("执行改变数据", udata);
+
+            udata.forEach((item, idx) => {
+                item.key = idx + 1
+            })
+            setData(udata)
+        })()
+
+    }, [])
+
+
+
+    //修改
     const edit = (record) => {
         form.setFieldsValue({
-            name: '',
-            age: '',
-            gender: '',
-            position: '',
-
+            Name: '',
+            Age: '',
+            Gender: '',
+            RolesID: '',
             ...record,
         });
         setEditingKey(record.key);
     };
     //点击删除
-    const Dremove = (id) => {
-        console.log(3);
+    const Dremove = (row) => {
+        let id = row._id
+        console.log(3, id);
+        (async function () {
+            //拿到数据
+            let data = await request.remove('/user/' + id)
+
+            console.log("执行改变数据", data);
+            if (data !== 0) {
+                console.log(234);
+                let { data: udata } = await request.get('/user')
+                udata.forEach((item, idx) => {
+                    item.key = idx + 1
+                })
+                setData(udata)
+            }
+
+        })()
+
+
+
+
+
+
     };
 
     const cancel = () => {
         setEditingKey('');
     };
-
+    //保存
     const save = async (key) => {
         try {
             const row = await form.validateFields();
@@ -87,6 +131,14 @@ const DepartReaet = () => {
                 newData.splice(index, 1, { ...item, ...row });
                 setData(newData);
                 setEditingKey('');
+                let id = newData[key - 1]._id
+                console.log('newData', newData[key - 1], id);
+                let { data } = await request.put('/user/' + id,
+                    {
+                        ...newData[key - 1]
+                    })
+                console.log('savedata', data);
+
             } else {
                 newData.push(row);
                 setData(newData);
@@ -100,25 +152,25 @@ const DepartReaet = () => {
     const columns = [
         {
             title: '姓名',
-            dataIndex: 'name',
+            dataIndex: 'Name',
             width: '25%',
             editable: true,
         },
         {
             title: '年龄',
-            dataIndex: 'gender',
+            dataIndex: 'Age',
             width: '15%',
             editable: true,
         },
         {
             title: '性别',
-            dataIndex: 'age',
+            dataIndex: 'Gender',
             width: '15%',
             editable: true,
         },
         {
             title: '职务（职位）',
-            dataIndex: 'position',
+            dataIndex: 'RolesID',
             width: '20%',
             editable: true,
         },
@@ -130,7 +182,7 @@ const DepartReaet = () => {
                 return editable ? (
                     <span>
                         <a
-                            href="javascript:;"
+                            // href="javascript:;"
                             onClick={() => save(record.key)}
                             style={{
                                 marginRight: 8,

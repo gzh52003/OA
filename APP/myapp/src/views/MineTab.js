@@ -1,7 +1,7 @@
 // 我的页面
-import React, { useState } from 'react'
+import React, { useState, lazy } from 'react'
 import { withRouter } from 'react-router-dom';
-import { Grid, NavBar, Icon, TabBar, List, WhiteSpace, Card, Flex, InputItem, Switch, Stepper, Range, Button } from 'antd-mobile';
+import { Grid, NavBar, Icon, TabBar, List, WhiteSpace, Card, Flex, InputItem, Switch, Stepper, Range, Button, WingBlank } from 'antd-mobile';
 import '../css/MineTa.scss'
 import {
     SwapOutlined,
@@ -10,13 +10,37 @@ import {
 } from '@ant-design/icons';
 const Item = List.Item;
 const Brief = Item.Brief;
+import { connect } from 'react-redux';
+import Login from "./Login"
+
+
+
+@connect((state) => {
+    return {
+        currentUser: state.user
+    }
+})
+
 class MineTab extends React.Component {
+    // this.props.history.push('/home')
     state = {
         disabled: false,
     }
     render() {
+        let Loginout1 = (props) => {
+            localStorage.removeItem('currentUser')
+            // ???????????????????????????
+            console.log(this.props);
+            console.log('hhhhhhhhhhhhhh', this.props.props.history.replace('/login'));
+            currentUser.Name = ''
+            currentUser.Phone = ''
+            currentUser.LoginID = ''
+            // this.props.props.history.push('/Login')
+            this.render()
+        }
+        let currentUser = this.props.currentUser
         return (
-            <div style={{fontSize:'1rem'}}>
+            <div style={{ fontSize: '1rem' }}>
                 <div className="minebody">
                     <div className="xx">
                         <h1 className="mtitle">个人信息</h1>
@@ -25,10 +49,10 @@ class MineTab extends React.Component {
                     <span>由自己编辑，部分内容展示在对外的信息，如昵称...</span>
                 </div>
                 <List className="my-list mineList">
-                    <Item extra={<span className="qianming">雨兰</span>}
+                    <Item extra={<span className="qianming">{currentUser.LoginID}</span>}
                         arrow="horizontal" onClick={() => { }}>头像</Item>
-                    <Item extra="老韦" arrow="horizontal" onClick={() => { }}>昵称</Item>
-                    <Item extra="15298798878" arrow="horizontal" onClick={() => { }}>电话</Item>
+                    <Item extra={currentUser.Name} arrow="horizontal" onClick={() => { }}>昵称</Item>
+                    <Item extra={currentUser.Phone} arrow="horizontal" onClick={() => { }}>电话</Item>
                     <Item extra="未设置" arrow="horizontal" onClick={() => { }}>钉钉号</Item>
                     <Item extra={<QrcodeOutlined />} arrow="horizontal" onClick={() => { }}>二维码名片</Item>
                     <Item extra={<span><UserOutlined />未定义</span>} arrow="horizontal" onClick={() => { }}>个人实人认证</Item>
@@ -49,8 +73,9 @@ class MineTab extends React.Component {
                     onClick={() => { }}
                     style={{ marginBottom: '10px' }}
                 >
-                    真开心   <Button type="ghost" inline style={{ marginRight: '4px', height: '20px', fontSize: '12px', width: '70px', lineHeight: '20px', borderBottom: '1px solid #ccc' }}>主企业</Button><Brief>我在该团队内的名字：老韦</Brief>
+                    真开心   <Button type="ghost" inline style={{ marginRight: '4px', height: '20px', fontSize: '12px', width: '70px', lineHeight: '20px', borderBottom: '1px solid #ccc' }}>主企业</Button><Brief>我在该团队内的名字：{currentUser.Name}</Brief>
                 </Item>
+                <Button type="warning" className="Loginout1" onClick={Loginout1}>退出</Button><WhiteSpace />
             </div>);
     }
 }

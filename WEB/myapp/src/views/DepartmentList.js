@@ -11,6 +11,7 @@ function callback(key) {
 
 function DepartmentList() {
     return <div>
+
         {/* 面包屑导航 */}
         <Breadcrumb style={{ marginBottom: '10px' }}>
             <Breadcrumb.Item href="">
@@ -31,40 +32,39 @@ function DepartmentList() {
             <Panel header="财务部" key="1">
                 <Collapse defaultActiveKey="1">
                     <Panel header="成员列表" key="1">
-                        <DepartReaet />
+                        <DepartReaet k={1} />
                     </Panel>
                 </Collapse>
             </Panel>
             <Panel header="后勤部" key="2">
                 <Collapse defaultActiveKey="2">
                     <Panel header="成员列表" key="2">
-                        <DepartReaet />
+                        <DepartReaet k={2} />
                     </Panel>
                 </Collapse>
             </Panel>
             <Panel header="公关部" key="3">
                 <Collapse defaultActiveKey="3">
                     <Panel header="成员列表" key="3">
-                        <DepartReaet />
+                        <DepartReaet k={3} />
                     </Panel>
                 </Collapse>
             </Panel>
             <Panel header="技术部" key="4">
                 <Collapse defaultActiveKey="4">
                     <Panel header="成员列表" key="4">
-                        <DepartReaet />
+                        <DepartReaet k={4} />
                     </Panel>
                 </Collapse>
             </Panel>
             <Panel header="运营部" key="5">
                 <Collapse defaultActiveKey="5">
                     <Panel header="成员列表" key="5">
-                        <DepartReaet />
+                        <DepartReaet k={5} />
                     </Panel>
                 </Collapse>
             </Panel>
         </Collapse >
-
     </div >
 }
 

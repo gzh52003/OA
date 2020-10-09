@@ -34,7 +34,7 @@ class Performanc extends React.Component {
                 className="zpheader"
                 mode="light"
                 icon={<Icon type="left" />}
-                onLeftClick={() => console.log('onLeftClick')}
+                onLeftClick={() => this.props.history.goBack()}
                 rightContent={[
                     <Icon key="0" type="ellipsis" />,
                 ]}
@@ -107,7 +107,7 @@ class Performanc extends React.Component {
                 </div>
 
             </Tabs>
-        </div>
+        </div >
 
         )
     }
