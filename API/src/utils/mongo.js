@@ -93,6 +93,7 @@ async function find(colName, query = {}, options = {}) { // options={litmit:10,s
     
     // 获取查询加过的总数总数
     const count = await result.count();
+    
 
     // 判断是否要跳过记录
     if (options.skip) {

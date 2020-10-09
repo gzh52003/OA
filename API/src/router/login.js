@@ -7,6 +7,7 @@ const token = require('../utils/token');
 const { formatData,md5 } = require('../utils/tools');
 const mongo = require('../utils/mongo');
 const {password_privateKey}=require("../config.json");
+const { log } = require('console');
 
 // 登录
 router.post('/', async (req, res) => {
@@ -26,7 +27,6 @@ router.post('/', async (req, res) => {
      Password = hash.digest('hex');
 
      Password = md5(Password)
-
     let result = await mongo.find('user', { LoginID, Password },{field: { Password: false }});//[{}]
     
     
