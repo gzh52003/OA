@@ -88,14 +88,14 @@ function Login(props) {
             >
                 <Input.Password />
             </Form.Item>
-            <Form.Item>
+            {/*      <Form.Item>
                 <Search
                     className="sea"
                     placeholder="请输入验证码"
                     enterButton="验证码"
                     size="middle"
                 />
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item {...tailLayout} name="remember" valuePropName="checked">
                 <Checkbox>Remember me</Checkbox>

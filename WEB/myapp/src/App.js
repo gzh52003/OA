@@ -41,7 +41,7 @@ const Other = lazy(() => import("./views/Other"));
 const UserList = lazy(() => import("./views/UserList"));
 const UserAdd = lazy(() => import("./views/UserAdd"));
 const DepartmentList = lazy(() => import("./views/DepartmentList"));
-const DepartmentAdd = lazy(() => import("./views/DepartmentAdd"));
+// const DepartmentAdd = lazy(() => import("./views/DepartmentAdd"));
 const Login = lazy(() => import("./Login/Login"));
 
 //点击退出
@@ -169,12 +169,12 @@ class App extends React.PureComponent {
           icon: <TableOutlined />,
           path: '/DepartmentList'
         },
-        {
-          text: "部门添加",
-          name: "DepartmentAdd",
-          icon: <InsertRowAboveOutlined />,
-          path: '/DepartmentAdd'
-        },
+        /*     {
+              text: "部门添加",
+              name: "DepartmentAdd",
+              icon: <InsertRowAboveOutlined />,
+              path: '/DepartmentAdd'
+            }, */
       ],
     ],
     collapsed: false,
@@ -294,7 +294,7 @@ class App extends React.PureComponent {
                       <Route path="/UserList" component={UserList} />
                       <Route path="/UserAdd" component={UserAdd} />
                       <Route path="/DepartmentList" component={DepartmentList} />
-                      <Route path="/DepartmentAdd" component={DepartmentAdd} />
+                      {/* <Route path="/DepartmentAdd" component={DepartmentAdd} /> */}
                       <Route path="/notfound" render={() => <div>404</div>} />
                       <Redirect from="/" to="/Home" exact />
                     </Switch>
