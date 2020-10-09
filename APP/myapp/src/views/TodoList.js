@@ -59,9 +59,9 @@ const data = [
         this.state = {
           dataSource,
           isLoading: true,
-          isTodo:this.props.match.params.isTodo==="todo"?true:false
+          isTodo:this.props.match.path.includes('todo')
         };
-        console.log("this.props",this.state.isTodo,this.props.match.params.isTodo)
+        console.log("this.props",this.state.isTodo,this.props.match.path.includes('todo'))
     }
   
     componentDidMount() {
@@ -155,7 +155,7 @@ const data = [
                   // <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
                   <Icon key="1" type="ellipsis" color="#000" />,
                 ]}
-              >{this.props.match.params.isTodo === 'todo'?'待处理事项':'已处理事项'}</NavBar>}
+              >{this.state.isTodo?'待处理事项':'已处理事项'}</NavBar>}
               renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
                 {this.state.isLoading ? '加载中...' : '加载更多'}
               </div>)}

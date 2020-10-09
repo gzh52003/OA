@@ -52,21 +52,12 @@ export function withAuth(InnerComponent){
         }
         render() {
             //根据条件选择是否渲染InnerComponent
-            console.log("执行到这里",this.props);
-            if(this.props.currentUser.authorization === this.props.isLogin){
+            if(this.props.currentUser.username){
                 return super.render()
             }
             return <Redirect to="/login" />
         }
     }
-}
-
-//函数，传进来一个组件，返回一个组件
-const withAuthGoto = (Cmp)=>props=>{
-    return <Cmp {...props}></Cmp>
-}
-function goto(){
-
 }
 
 export default{
